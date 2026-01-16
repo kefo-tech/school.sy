@@ -3,211 +3,554 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>school.sy – منصة تعليمية</title>
-  <link rel="stylesheet" href="./styles.css">
+  <title>school.sy — دليل المدارس</title>
+
+  <style>
+    :root{
+      --bg: #f6f8ff;
+      --ink:#0f172a;
+      --muted:#64748b;
+      --card:#ffffff;
+      --line: rgba(15,23,42,.10);
+      --shadow: 0 10px 26px rgba(2,6,23,.10);
+      --r:18px;
+      --primary:#2563eb;
+      --primary2:#06b6d4;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Kufi Arabic", "Noto Sans Arabic", sans-serif;
+      background:
+        radial-gradient(900px 500px at 15% 0%, rgba(37,99,235,.16), transparent 60%),
+        radial-gradient(800px 450px at 85% 5%, rgba(6,182,212,.14), transparent 55%),
+        linear-gradient(180deg, #eef7ff, var(--bg));
+      color:var(--ink);
+    }
+
+    .container{
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 14px 14px 40px;
+    }
+
+    /* ===== Hero ===== */
+    .hero{
+      position: relative;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.25);
+      box-shadow: var(--shadow);
+      min-height: 220px;
+      background:
+        linear-gradient(135deg, rgba(37,99,235,.90), rgba(6,182,212,.80)),
+        url("https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1600&q=60");
+      background-size: cover;
+      background-position: center;
+      isolation: isolate;
+    }
+    .hero::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(2,6,23,.05), rgba(2,6,23,.55));
+      z-index:0;
+    }
+    .heroInner{
+      position: relative;
+      z-index:1;
+      padding: 20px 18px;
+      display:flex;
+      gap: 14px;
+      align-items:flex-end;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      color:#fff;
+    }
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .logo{
+      width:52px;height:52px;border-radius:16px;
+      display:grid;place-items:center;
+      background: rgba(255,255,255,.18);
+      border: 1px solid rgba(255,255,255,.25);
+      backdrop-filter: blur(10px);
+      font-weight: 900;
+      font-size: 22px;
+    }
+    .heroTitle{
+      font-weight: 1000;
+      font-size: clamp(22px, 3vw, 34px);
+      margin:0;
+      line-height: 1.15;
+    }
+    .heroSub{
+      margin-top:6px;
+      opacity:.92;
+      max-width: 720px;
+      line-height:1.6;
+    }
+
+    .heroBadges{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap: wrap;
+    }
+    .chip{
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.16);
+      border: 1px solid rgba(255,255,255,.25);
+      backdrop-filter: blur(10px);
+      font-weight: 800;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    /* ===== Sections ===== */
+    .section{
+      margin-top: 18px;
+    }
+    .sectionHead{
+      display:flex;
+      align-items:flex-end;
+      justify-content: space-between;
+      gap:12px;
+      flex-wrap: wrap;
+      margin: 18px 2px 10px;
+    }
+    .sectionHead h2{
+      margin:0;
+      font-size: 18px;
+      font-weight: 1000;
+    }
+    .hint{
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* ===== Top 3 schools ===== */
+    .top3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .topCard{
+      background: rgba(255,255,255,.78);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      box-shadow: 0 8px 20px rgba(2,6,23,.08);
+      padding: 12px;
+      display:flex;
+      gap: 12px;
+      align-items:center;
+      min-height: 88px;
+    }
+    .avatar{
+      width:58px;height:58px;border-radius: 50%;
+      overflow:hidden;
+      border: 3px solid rgba(37,99,235,.18);
+      background: #e2e8f0;
+      flex: 0 0 auto;
+      display:grid;
+      place-items:center;
+      font-weight: 1000;
+      color:#0f172a;
+    }
+    .avatar img{ width:100%;height:100%;object-fit:cover; display:block; }
+    .topMeta{ min-width:0; }
+    .topName{
+      font-weight: 1000;
+      margin:0;
+      font-size: 15px;
+      overflow:hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 240px;
+    }
+    .topVotes{
+      margin-top: 4px;
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+    .rank{
+      margin-inline-start:auto;
+      font-weight: 1000;
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--primary2));
+      border-radius: 12px;
+      padding: 6px 10px;
+      font-size: 13px;
+      box-shadow: 0 10px 18px rgba(37,99,235,.18);
+    }
+
+    /* ===== Filters ===== */
+    .filters{
+      background: rgba(255,255,255,.78);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      box-shadow: 0 8px 18px rgba(2,6,23,.06);
+      padding: 12px;
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items:center;
+    }
+    .filters input, .filters select{
+      border-radius: 14px;
+      border: 1px solid rgba(15,23,42,.12);
+      background: rgba(255,255,255,.85);
+      padding: 10px 12px;
+      outline: none;
+      min-width: 220px;
+      font-weight: 700;
+    }
+    .filters input:focus, .filters select:focus{
+      border-color: rgba(37,99,235,.35);
+      box-shadow: 0 0 0 5px rgba(37,99,235,.12);
+    }
+    .count{
+      margin-inline-start:auto;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    /* ===== Schools grid ===== */
+    .grid{
+      margin-top: 12px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .card{
+      background: rgba(255,255,255,.78);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      box-shadow: 0 10px 24px rgba(2,6,23,.08);
+      overflow:hidden;
+      display:flex;
+      flex-direction: column;
+      min-height: 320px;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .card:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 18px 34px rgba(2,6,23,.12);
+    }
+    .cover{
+      height: 140px;
+      background: linear-gradient(135deg, rgba(37,99,235,.20), rgba(6,182,212,.18));
+      position: relative;
+      overflow:hidden;
+    }
+    .cover img{
+      width:100%;height:100%;object-fit:cover; display:block;
+    }
+    .cardBody{
+      padding: 12px;
+      display:flex;
+      flex-direction: column;
+      gap: 8px;
+      flex:1;
+    }
+    .schoolName{
+      margin:0;
+      font-weight: 1000;
+      font-size: 16px;
+      line-height: 1.25;
+    }
+    .schoolAddr{
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.6;
+      min-height: 42px;
+    }
+    .cardActions{
+      display:flex;
+      gap: 10px;
+      margin-top:auto;
+      padding-top: 8px;
+      flex-wrap: wrap;
+    }
+    .btn{
+      cursor:pointer;
+      border: 1px solid transparent;
+      border-radius: 14px;
+      padding: 10px 12px;
+      font-weight: 1000;
+      font-size: 13px;
+      background: linear-gradient(135deg, var(--primary), var(--primary2));
+      color:#fff;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      box-shadow: 0 10px 18px rgba(37,99,235,.14);
+      flex: 1 1 auto;
+    }
+    .btn.ghost{
+      background: rgba(15,23,42,.04);
+      color: var(--ink);
+      border-color: rgba(15,23,42,.10);
+      box-shadow: none;
+    }
+
+    .footer{
+      margin-top: 22px;
+      padding: 16px 0 6px;
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 13px;
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 980px){
+      .top3{ grid-template-columns: 1fr; }
+      .grid{ grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px){
+      .grid{ grid-template-columns: 1fr; }
+      .filters input, .filters select{ min-width: 100%; }
+      .count{ width:100%; margin-inline-start:0; }
+    }
+  </style>
 </head>
+
 <body>
+  <div class="container">
+    <!-- HERO -->
+    <section class="hero" aria-label="Hero">
+      <div class="heroInner">
+        <div class="brand">
+          <div class="logo">S</div>
+          <div>
+            <h1 class="heroTitle">school.sy</h1>
+            <div class="heroSub">
+              دليل المدارس + صفحات مدارس تفاعلية (أفضل المعلمين/الطلاب + منشورات + اختبارات).
+            </div>
+          </div>
+        </div>
 
-  <header class="topbar">
-    <div class="brand">
-      <div class="logo">S</div>
-      <div>
-        <div class="title" id="schoolName">school.sy</div>
-        <div class="subtitle">منصة تعليمية تربط المدرسة بالطلاب والمعلمين والأهل</div>
+        <div class="heroBadges">
+          <div class="chip">📍 ابحث حسب المدينة</div>
+          <div class="chip">🏆 توب 3 مدارس</div>
+          <div class="chip">🗺️ خرائط Google</div>
+        </div>
       </div>
+    </section>
+
+    <!-- TOP 3 SCHOOLS -->
+    <section class="section">
+      <div class="sectionHead">
+        <h2>🏆 أفضل المدارس (Top 3)</h2>
+        <div class="hint">حسب التصويت — (سنربط التصويت لاحقًا)</div>
+      </div>
+      <div class="top3" id="top3"></div>
+    </section>
+
+    <!-- FILTERS -->
+    <section class="section">
+      <div class="sectionHead">
+        <h2>🏫 مدارس سوريا</h2>
+        <div class="hint">ابحث بالاسم أو اختر المدينة</div>
+      </div>
+
+      <div class="filters">
+        <input id="searchBox" placeholder="ابحث باسم المدرسة..." />
+        <select id="citySelect">
+          <option value="">كل المدن</option>
+        </select>
+        <div class="count" id="countLabel">—</div>
+      </div>
+
+      <div class="grid" id="schoolsGrid"></div>
+    </section>
+
+    <div class="footer">
+      <span>school.sy ©</span>
+      <span>•</span>
+      <span>تطوير: Zakaria KeFo</span>
     </div>
+  </div>
 
-    <nav class="actions">
-      <button class="btn ghost" id="btnGoPublic">الرئيسية</button>
-      <button class="btn ghost" id="btnGoLogin">تسجيل الدخول</button>
-      <button class="btn" id="btnGoRequest">طلب حساب</button>
-      <button class="btn danger hidden" id="btnLogout">تسجيل خروج</button>
-    </nav>
-  </header>
+  <!-- =========================
+       Firebase + Home Logic
+  ========================== -->
+  <script type="module">
+    // 1) ضع firebaseConfig الخاص بك هنا (موجود عندك)
+    const firebaseConfig = {
+      apiKey: "AIzaSyCexRHqxd8Xm_EBWMEnLj_2WAjxJcgXf9g",
+      authDomain: "school-sy.firebaseapp.com",
+      projectId: "school-sy",
+      storageBucket: "school-sy.firebasestorage.app",
+      messagingSenderId: "121186119852",
+      appId: "1:121186119852:web:f96d12deade6cebbda6f09"
+    };
 
-  <main class="container" id="appRoot">
+    // 2) Imports (CDN) — مناسب لـ GitHub Pages
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import {
+      getFirestore, collection, query, orderBy, limit, onSnapshot
+    } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-    <!-- PUBLIC -->
-    <section id="viewPublic" class="view">
-      <div class="grid2">
-        <div class="card hero">
-          <h2>👋 مرحباً بك في school.sy</h2>
-          <p class="muted">
-            ستجد أفضل 3 معلمين وطلاب حسب التصويت (تحديث كل ساعة)، ومنشورات المعلمين (معلومات + اختيار من متعدد).
-          </p>
-          <div class="heroGlow"></div>
-        </div>
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-        <div class="card">
-          <h3>⚡ كيف تعمل المنصة؟</h3>
-          <ul class="bullets muted">
-            <li>المعلم/الطالب/الإدارة يقدم طلب حساب.</li>
-            <li>المطوّر يوافق ويولّد كود KeFo + كلمة مرور.</li>
-            <li>المنشورات والنماذج تنشر من المعلمين/الإدارة.</li>
-          </ul>
-        </div>
-      </div>
+    const $ = (id) => document.getElementById(id);
 
-      <div class="sectionTitle">
-        <h2>🏆 أفضل 3 معلمين</h2>
-        <div class="hint">تحديث تلقائي كل ساعة</div>
-      </div>
-      <div class="rankRow" id="teachersTop"></div>
+    const top3El = $("top3");
+    const gridEl = $("schoolsGrid");
+    const searchBox = $("searchBox");
+    const citySelect = $("citySelect");
+    const countLabel = $("countLabel");
 
-      <div class="sectionTitle">
-        <h2>🌟 أفضل 3 طلاب</h2>
-        <div class="hint">تحديث تلقائي كل ساعة</div>
-      </div>
-      <div class="rankRow" id="studentsTop"></div>
+    const esc = (s) => String(s || "").replace(/[&<>"']/g, c => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+    }[c]));
 
-      <div class="sectionTitle">
-        <h2>📌 منشورات المعلمين</h2>
-        <div class="hint">معلومات + اختيار من متعدد</div>
-      </div>
-      <div class="posts" id="postsList"></div>
-    </section>
+    // ===== Local state
+    let allSchools = [];        // {id, name, city, address, logoURL, coverURL, mapsUrl, votesCount}
+    let topSchools = [];        // Top 3 by votesCount
 
-    <!-- LOGIN -->
-    <section id="viewLogin" class="view hidden">
-      <div class="card">
-        <h2>تسجيل الدخول</h2>
-        <p class="muted">استخدم الكود الذي يبدأ بـ KeFo وكلمة المرور التي وصلتك.</p>
+    function mapsLink(s){
+      // أولوية: إذا كان عندك mapsUrl مخزن
+      if (s.mapsUrl) return s.mapsUrl;
 
-        <div class="form">
-          <label>كود الدخول</label>
-          <input id="loginCode" placeholder="KeFo123456" />
+      // وإلا: ابني رابط بحث باستخدام الاسم + المدينة + العنوان
+      const q = encodeURIComponent(`${s.name || ""} ${s.city || ""} ${s.address || ""}`.trim());
+      return `https://www.google.com/maps/search/?api=1&query=${q}`;
+    }
 
-          <label>كلمة المرور</label>
-          <input id="loginPass" type="password" placeholder="••••••••" />
+    function schoolPageLink(s){
+      // صفحة المدرسة سننشئها لاحقًا
+      return `./school.html?sid=${encodeURIComponent(s.id)}`;
+    }
 
-          <button class="btn" id="btnLogin">دخول</button>
-          <div class="small muted" id="loginMsg"></div>
-        </div>
-      </div>
-    </section>
+    function renderTop3(){
+      top3El.innerHTML = "";
+      const arr = topSchools.slice(0, 3);
 
-    <!-- REQUEST -->
-    <section id="viewRequest" class="view hidden">
-      <div class="card">
-        <h2>طلب تسجيل حساب</h2>
-        <p class="muted">املأ البيانات وسيصل الطلب للمطوّر للمراجعة.</p>
+      for (let i=0;i<3;i++){
+        const s = arr[i] || { name:"—", votesCount:0, logoURL:"" };
+        const el = document.createElement("div");
+        el.className = "topCard";
+        el.innerHTML = `
+          <div class="avatar">
+            ${s.logoURL ? `<img src="${esc(s.logoURL)}" alt="">` : (esc(s.name)[0] || "؟")}
+          </div>
+          <div class="topMeta">
+            <p class="topName">${esc(s.name || "—")}</p>
+            <div class="topVotes">التصويت: ${Number(s.votesCount || 0)}</div>
+          </div>
+          <div class="rank">#${i+1}</div>
+        `;
+        top3El.appendChild(el);
+      }
+    }
 
-        <div class="form">
-          <label>الدور المطلوب</label>
-          <select id="reqRole">
-            <option value="teacher">معلم</option>
-            <option value="admin">إدارة</option>
-            <option value="student">طالب</option>
-            <option value="parent">ولي أمر</option>
-          </select>
+    function fillCities(){
+      const cities = Array.from(new Set(allSchools.map(s => (s.city || "").trim()).filter(Boolean))).sort((a,b)=>a.localeCompare(b,'ar'));
+      const current = citySelect.value;
+      citySelect.innerHTML = `<option value="">كل المدن</option>` + cities.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join("");
+      citySelect.value = current; // حاول الحفاظ على الاختيار
+    }
 
-          <label>الاسم</label>
-          <input id="reqName" placeholder="الاسم الكامل" />
+    function applyFilters(){
+      const q = (searchBox.value || "").trim().toLowerCase();
+      const city = (citySelect.value || "").trim();
 
-          <label>هاتف/واتساب (اختياري)</label>
-          <input id="reqPhone" placeholder="+49..." />
+      const filtered = allSchools.filter(s => {
+        const okCity = !city || (s.city || "").trim() === city;
+        const okQ = !q || (s.name || "").toLowerCase().includes(q) || (s.address || "").toLowerCase().includes(q);
+        return okCity && okQ;
+      });
 
-          <label>ملاحظة (اختياري)</label>
-          <textarea id="reqNote" rows="3" placeholder="اختصاص / صف / معلومات إضافية"></textarea>
+      renderSchools(filtered);
+      countLabel.textContent = `عدد المدارس: ${filtered.length}`;
+    }
 
-          <button class="btn" id="btnSendRequest">إرسال الطلب</button>
-          <div class="small muted" id="reqMsg"></div>
-        </div>
-      </div>
-    </section>
+    function renderSchools(list){
+      gridEl.innerHTML = "";
+      if (!list.length){
+        gridEl.innerHTML = `<div style="grid-column:1/-1;color:#64748b;font-weight:900;padding:10px">لا توجد نتائج مطابقة.</div>`;
+        return;
+      }
 
-    <!-- DASHBOARD -->
-    <section id="viewDashboard" class="view hidden">
-      <div class="grid2">
-        <div class="card">
-          <h2 id="dashTitle">لوحة التحكم</h2>
-          <div class="small muted" id="dashUser"></div>
-          <hr class="sep"/>
-
-          <!-- Teacher/Admin -->
-          <div id="dashTeacherAdmin" class="hidden">
-            <h3>نشر محتوى</h3>
-
-            <div class="tabs">
-              <button class="chip active" data-tab="post">منشور</button>
-              <button class="chip" data-tab="mcq">اختيار من متعدد</button>
+      for (const s of list){
+        const el = document.createElement("div");
+        el.className = "card";
+        el.innerHTML = `
+          <div class="cover">
+            ${s.coverURL ? `<img src="${esc(s.coverURL)}" alt="">` : ``}
+          </div>
+          <div class="cardBody">
+            <h3 class="schoolName">${esc(s.name || "مدرسة")}</h3>
+            <div class="schoolAddr">
+              <div>📍 ${esc(s.city || "—")}</div>
+              <div>${esc(s.address || "")}</div>
             </div>
 
-            <div class="form" id="postForm">
-              <label>عنوان</label>
-              <input id="pTitle" placeholder="عنوان المنشور" />
-              <label>محتوى</label>
-              <textarea id="pContent" rows="4" placeholder="اكتب المحتوى..."></textarea>
-              <button class="btn" id="btnPublishPost">نشر</button>
-              <div class="small muted" id="postMsg"></div>
-            </div>
-
-            <div class="form hidden" id="mcqForm">
-              <label>السؤال</label>
-              <input id="qQuestion" placeholder="اكتب السؤال..." />
-
-              <label>الخيارات (4)</label>
-              <input id="qA" placeholder="A" />
-              <input id="qB" placeholder="B" />
-              <input id="qC" placeholder="C" />
-              <input id="qD" placeholder="D" />
-
-              <label>الإجابة الصحيحة</label>
-              <select id="qCorrect">
-                <option value="0">A</option>
-                <option value="1">B</option>
-                <option value="2">C</option>
-                <option value="3">D</option>
-              </select>
-
-              <button class="btn" id="btnPublishMCQ">نشر النموذج</button>
-              <div class="small muted" id="mcqMsg"></div>
+            <div class="cardActions">
+              <a class="btn ghost" href="${esc(mapsLink(s))}" target="_blank" rel="noopener">🗺️ خرائط Google</a>
+              <a class="btn" href="${esc(schoolPageLink(s))}">فتح صفحة المدرسة</a>
             </div>
           </div>
+        `;
+        gridEl.appendChild(el);
+      }
+    }
 
-          <!-- Developer -->
-          <div id="dashDeveloper" class="hidden">
-            <h3>طلبات الحسابات (Pending)</h3>
-            <p class="small muted">أدخل كلمة مرور ثم وافق ليتم توليد كود KeFo وإنشاء حساب.</p>
+    // ===== Listen Schools (Firestore)
+    // متوقع أن عندك collection: schools
+    // fields المقترحة: name, city, address, logoURL, coverURL, mapsUrl, votesCount
+    const schoolsQ = query(collection(db, "schools"), orderBy("name"), limit(500));
 
-            <div class="form">
-              <label>كلمة مرور للحساب الجديد</label>
-              <input id="devPassword" type="password" placeholder="6 أحرف على الأقل" />
-            </div>
+    onSnapshot(schoolsQ, (snap) => {
+      const arr = [];
+      snap.forEach(doc => {
+        const d = doc.data() || {};
+        arr.push({
+          id: doc.id,
+          name: d.name || "",
+          city: d.city || "",
+          address: d.address || "",
+          logoURL: d.logoURL || "",
+          coverURL: d.coverURL || "",
+          mapsUrl: d.mapsUrl || "",
+          votesCount: Number(d.votesCount || 0) // مؤقتًا داخل وثيقة المدرسة
+        });
+      });
 
-            <div id="requestsList" class="list"></div>
-          </div>
-        </div>
+      allSchools = arr;
 
-        <div class="card">
-          <h2>التصويت</h2>
-          <p class="muted small">نسخة MVP: تصويت عبر UID. لاحقًا نربطه بأزرار داخل الواجهة.</p>
+      // Top 3 حسب votesCount (مؤقتًا) — لاحقًا نجعله من leaderboards
+      topSchools = [...allSchools].sort((a,b) => (b.votesCount||0) - (a.votesCount||0));
 
-          <div class="form">
-            <label>UID الهدف</label>
-            <input id="voteUid" placeholder="uid..." />
+      renderTop3();
+      fillCities();
+      applyFilters();
+    }, (err) => {
+      console.error(err);
+      top3El.innerHTML = `<div style="color:#b91c1c;font-weight:900">خطأ في قراءة المدارس من Firestore. تأكد من وجود collection باسم schools.</div>`;
+    });
 
-            <label>نوع التصويت</label>
-            <select id="voteType">
-              <option value="teacher">Teacher</option>
-              <option value="student">Student</option>
-            </select>
+    // Events
+    searchBox.addEventListener("input", applyFilters);
+    citySelect.addEventListener("change", applyFilters);
 
-            <button class="btn" id="btnVote">+ تصويت</button>
-            <div class="small muted" id="voteMsg"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="footer">
-    <span>school.sy ©</span>
-    <span class="dot">•</span>
-    <span>تطوير: Zakaria KeFo</span>
-  </footer>
-
-  <script type="module" src="./app.js"></script>
+    // UI initial
+    countLabel.textContent = "تحميل...";
+  </script>
 </body>
 </html>
