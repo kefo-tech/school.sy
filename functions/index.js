@@ -1,11 +1,9 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 admin.initializeApp();
-
 const db = admin.firestore();
 
 function genCode(){
-  // KeFo + 6 digits
   const n = Math.floor(100000 + Math.random() * 900000);
   return `KeFo${n}`;
 }
@@ -17,8 +15,7 @@ async function isDeveloper(uid){
 
 exports.approveAccountRequest = functions.https.onCall(async (data, context) => {
   if (!context.auth) throw new functions.https.HttpsError("unauthenticated", "Login required.");
-  const uid = context.auth.uid;
-  if (!(await isDeveloper(uid))) throw new functions.https.HttpsError("permission-denied", "Developer only.");
+  if (!(await isDeveloper(context.auth.uid))) throw new functions.https.HttpsError("permission-denied", "Developer only.");
 
   const { requestId, password } = data || {};
   if (!requestId) throw new functions.https.HttpsError("invalid-argument", "requestId required.");
@@ -29,28 +26,23 @@ exports.approveAccountRequest = functions.https.onCall(async (data, context) => 
   if (!snap.exists) throw new functions.https.HttpsError("not-found", "Request not found.");
 
   const req = snap.data();
-  if (req.status !== "pending") throw new functions.https.HttpsError("failed-precondition", "Request is not pending.");
+  if (req.status !== "pending") throw new functions.https.HttpsError("failed-precondition", "Not pending.");
 
-  // Generate unique code
   let code = genCode();
-  // very small collision risk; loop a few times
-  for (let i=0;i<5;i++){
-    const existing = await db.collection("users").where("code","==",code).limit(1).get();
-    if (existing.empty) break;
+  for (let i=0;i<6;i++){
+    const ex = await db.collection("users").where("code","==",code).limit(1).get();
+    if (ex.empty) break;
     code = genCode();
   }
 
   const email = `${code}@school.local`;
 
-  // Create Auth user
   const userRecord = await admin.auth().createUser({
     email,
     password: String(password),
-    displayName: req.displayName || code,
-    disabled: false
+    displayName: req.displayName || code
   });
 
-  // Create profile
   await db.doc(`users/${userRecord.uid}`).set({
     code,
     role: req.role,
@@ -60,41 +52,34 @@ exports.approveAccountRequest = functions.https.onCall(async (data, context) => 
     createdAt: admin.firestore.FieldValue.serverTimestamp()
   });
 
-  // Mark request approved
   await ref.update({
     status: "approved",
     decidedAt: admin.firestore.FieldValue.serverTimestamp(),
-    decidedBy: uid,
+    decidedBy: context.auth.uid,
     approvedUid: userRecord.uid,
     approvedCode: code
   });
 
-  return { ok: true, uid: userRecord.uid, code };
+  return { ok:true, uid:userRecord.uid, code };
 });
 
 exports.rejectAccountRequest = functions.https.onCall(async (data, context) => {
   if (!context.auth) throw new functions.https.HttpsError("unauthenticated", "Login required.");
-  const uid = context.auth.uid;
-  if (!(await isDeveloper(uid))) throw new functions.https.HttpsError("permission-denied", "Developer only.");
+  if (!(await isDeveloper(context.auth.uid))) throw new functions.https.HttpsError("permission-denied", "Developer only.");
 
   const { requestId } = data || {};
   if (!requestId) throw new functions.https.HttpsError("invalid-argument", "requestId required.");
 
-  const ref = db.doc(`account_requests/${requestId}`);
-  const snap = await ref.get();
-  if (!snap.exists) throw new functions.https.HttpsError("not-found", "Request not found.");
-
-  await ref.update({
+  await db.doc(`account_requests/${requestId}`).update({
     status: "rejected",
     decidedAt: admin.firestore.FieldValue.serverTimestamp(),
-    decidedBy: uid
+    decidedBy: context.auth.uid
   });
 
-  return { ok: true };
+  return { ok:true };
 });
 
-exports.addVote = functions.https.onCall(async (data, context) => {
-  // يمكن لاحقاً منع التصويت المكرر per user، الآن MVP بسيط
+exports.addVote = functions.https.onCall(async (data) => {
   const { targetUid, kind, schoolId } = data || {};
   if (!targetUid) throw new functions.https.HttpsError("invalid-argument", "targetUid required.");
   if (!["teacher","student"].includes(kind)) throw new functions.https.HttpsError("invalid-argument", "kind invalid.");
@@ -115,12 +100,10 @@ exports.addVote = functions.https.onCall(async (data, context) => {
   return { ok:true };
 });
 
-// Scheduled leaderboard update: every hour
 exports.updateLeaderboards = functions.pubsub
   .schedule("every 60 minutes")
   .timeZone("Europe/Berlin")
   .onRun(async () => {
-
     const schoolId = "default";
 
     async function top3Votes(colName){
