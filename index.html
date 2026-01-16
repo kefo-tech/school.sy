@@ -3,311 +3,287 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>school.sy — دليل المدارس</title>
+  <title>school.sy</title>
 
   <style>
     :root{
-      --bg: #f6f8ff;
-      --ink:#0f172a;
-      --muted:#64748b;
-      --card:#ffffff;
-      --line: rgba(15,23,42,.10);
-      --shadow: 0 10px 26px rgba(2,6,23,.10);
-      --r:18px;
-      --primary:#2563eb;
-      --primary2:#06b6d4;
+      --bg:#f6f8ff; --ink:#0f172a; --muted:#64748b;
+      --card:#ffffff; --line:rgba(15,23,42,.10);
+      --shadow:0 10px 26px rgba(2,6,23,.10);
+      --r:18px; --primary:#2563eb; --primary2:#06b6d4;
+      --danger:#b91c1c; --ok:#16a34a;
     }
-
     *{ box-sizing:border-box; }
     body{
       margin:0;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Kufi Arabic", "Noto Sans Arabic", sans-serif;
+      font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,"Noto Kufi Arabic","Noto Sans Arabic",sans-serif;
       background:
         radial-gradient(900px 500px at 15% 0%, rgba(37,99,235,.16), transparent 60%),
         radial-gradient(800px 450px at 85% 5%, rgba(6,182,212,.14), transparent 55%),
-        linear-gradient(180deg, #eef7ff, var(--bg));
+        linear-gradient(180deg,#eef7ff,var(--bg));
       color:var(--ink);
     }
+    .hidden{ display:none !important; }
+    .container{ max-width:1180px; margin:0 auto; padding:14px 14px 40px; }
 
-    .container{
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 14px 14px 40px;
-    }
-
-    /* ===== Hero ===== */
+    /* HERO */
     .hero{
-      position: relative;
-      border-radius: 22px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,.25);
-      box-shadow: var(--shadow);
-      min-height: 220px;
+      position:relative; border-radius:22px; overflow:hidden;
+      border:1px solid rgba(255,255,255,.25); box-shadow:var(--shadow);
+      min-height:220px;
       background:
         linear-gradient(135deg, rgba(37,99,235,.90), rgba(6,182,212,.80)),
         url("https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1600&q=60");
-      background-size: cover;
-      background-position: center;
-      isolation: isolate;
+      background-size:cover; background-position:center; isolation:isolate;
     }
-    .hero::after{
-      content:"";
-      position:absolute; inset:0;
-      background: linear-gradient(180deg, rgba(2,6,23,.05), rgba(2,6,23,.55));
-      z-index:0;
-    }
-    .heroInner{
-      position: relative;
-      z-index:1;
-      padding: 20px 18px;
-      display:flex;
-      gap: 14px;
-      align-items:flex-end;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      color:#fff;
-    }
-    .brand{
-      display:flex;
-      gap:12px;
-      align-items:center;
-    }
+    .hero::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(2,6,23,.05), rgba(2,6,23,.55)); z-index:0;}
+    .heroInner{ position:relative; z-index:1; padding:20px 18px; display:flex; gap:14px; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; color:#fff; }
+    .brand{ display:flex; gap:12px; align-items:center; }
     .logo{
-      width:52px;height:52px;border-radius:16px;
-      display:grid;place-items:center;
-      background: rgba(255,255,255,.18);
-      border: 1px solid rgba(255,255,255,.25);
-      backdrop-filter: blur(10px);
-      font-weight: 900;
-      font-size: 22px;
+      width:52px;height:52px;border-radius:16px; display:grid;place-items:center;
+      background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.25);
+      backdrop-filter:blur(10px); font-weight:1000; font-size:22px;
     }
-    .heroTitle{
-      font-weight: 1000;
-      font-size: clamp(22px, 3vw, 34px);
-      margin:0;
-      line-height: 1.15;
-    }
-    .heroSub{
-      margin-top:6px;
-      opacity:.92;
-      max-width: 720px;
-      line-height:1.6;
-    }
-
-    .heroBadges{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex-wrap: wrap;
-    }
+    .heroTitle{ font-weight:1000; font-size:clamp(22px,3vw,34px); margin:0; line-height:1.15; }
+    .heroSub{ margin-top:6px; opacity:.92; max-width:720px; line-height:1.6; }
+    .heroBadges{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
     .chip{
-      padding: 9px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.16);
-      border: 1px solid rgba(255,255,255,.25);
-      backdrop-filter: blur(10px);
-      font-weight: 800;
-      font-size: 13px;
-      white-space: nowrap;
+      padding:9px 12px; border-radius:999px;
+      background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.25);
+      backdrop-filter:blur(10px); font-weight:900; font-size:13px; white-space:nowrap;
     }
 
-    /* ===== Sections ===== */
-    .section{
-      margin-top: 18px;
-    }
-    .sectionHead{
-      display:flex;
-      align-items:flex-end;
-      justify-content: space-between;
-      gap:12px;
-      flex-wrap: wrap;
-      margin: 18px 2px 10px;
-    }
-    .sectionHead h2{
-      margin:0;
-      font-size: 18px;
-      font-weight: 1000;
-    }
-    .hint{
-      color: var(--muted);
-      font-size: 13px;
-    }
+    /* Sections */
+    .section{ margin-top:18px; }
+    .sectionHead{ display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap; margin:18px 2px 10px; }
+    .sectionHead h2{ margin:0; font-size:18px; font-weight:1000; }
+    .hint{ color:var(--muted); font-size:13px; font-weight:800; }
 
-    /* ===== Top 3 schools ===== */
-    .top3{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-    }
+    /* Top3 cards */
+    .top3{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
     .topCard{
-      background: rgba(255,255,255,.78);
-      border: 1px solid var(--line);
-      border-radius: var(--r);
-      box-shadow: 0 8px 20px rgba(2,6,23,.08);
-      padding: 12px;
-      display:flex;
-      gap: 12px;
-      align-items:center;
-      min-height: 88px;
+      background:rgba(255,255,255,.78); border:1px solid var(--line); border-radius:var(--r);
+      box-shadow:0 8px 20px rgba(2,6,23,.08); padding:12px;
+      display:flex; gap:12px; align-items:center; min-height:88px;
+      cursor:pointer;
     }
     .avatar{
-      width:58px;height:58px;border-radius: 50%;
-      overflow:hidden;
-      border: 3px solid rgba(37,99,235,.18);
-      background: #e2e8f0;
-      flex: 0 0 auto;
-      display:grid;
-      place-items:center;
-      font-weight: 1000;
-      color:#0f172a;
+      width:58px;height:58px;border-radius:50%; overflow:hidden;
+      border:3px solid rgba(37,99,235,.18); background:#e2e8f0;
+      flex:0 0 auto; display:grid; place-items:center;
+      font-weight:1000; color:#0f172a;
     }
     .avatar img{ width:100%;height:100%;object-fit:cover; display:block; }
     .topMeta{ min-width:0; }
-    .topName{
-      font-weight: 1000;
-      margin:0;
-      font-size: 15px;
-      overflow:hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      max-width: 240px;
-    }
-    .topVotes{
-      margin-top: 4px;
-      font-size: 13px;
-      color: var(--muted);
-      font-weight: 800;
-    }
+    .topName{ font-weight:1000; margin:0; font-size:15px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:240px; }
+    .topVotes{ margin-top:4px; font-size:13px; color:var(--muted); font-weight:900; }
     .rank{
-      margin-inline-start:auto;
-      font-weight: 1000;
-      color: #fff;
-      background: linear-gradient(135deg, var(--primary), var(--primary2));
-      border-radius: 12px;
-      padding: 6px 10px;
-      font-size: 13px;
-      box-shadow: 0 10px 18px rgba(37,99,235,.18);
+      margin-inline-start:auto; font-weight:1000; color:#fff;
+      background:linear-gradient(135deg,var(--primary),var(--primary2));
+      border-radius:12px; padding:6px 10px; font-size:13px;
+      box-shadow:0 10px 18px rgba(37,99,235,.18);
     }
 
-    /* ===== Filters ===== */
+    /* Filters */
     .filters{
-      background: rgba(255,255,255,.78);
-      border: 1px solid var(--line);
-      border-radius: var(--r);
-      box-shadow: 0 8px 18px rgba(2,6,23,.06);
-      padding: 12px;
-      display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      align-items:center;
+      background:rgba(255,255,255,.78); border:1px solid var(--line); border-radius:var(--r);
+      box-shadow:0 8px 18px rgba(2,6,23,.06);
+      padding:12px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;
     }
     .filters input, .filters select{
-      border-radius: 14px;
-      border: 1px solid rgba(15,23,42,.12);
-      background: rgba(255,255,255,.85);
-      padding: 10px 12px;
-      outline: none;
-      min-width: 220px;
-      font-weight: 700;
+      border-radius:14px; border:1px solid rgba(15,23,42,.12);
+      background:rgba(255,255,255,.85);
+      padding:10px 12px; outline:none; min-width:220px; font-weight:800;
     }
     .filters input:focus, .filters select:focus{
-      border-color: rgba(37,99,235,.35);
-      box-shadow: 0 0 0 5px rgba(37,99,235,.12);
+      border-color:rgba(37,99,235,.35);
+      box-shadow:0 0 0 5px rgba(37,99,235,.12);
     }
-    .count{
-      margin-inline-start:auto;
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 900;
+    .count{ margin-inline-start:auto; color:var(--muted); font-size:13px; font-weight:1000; }
+
+    /* Schools grid */
+    .grid{ margin-top:12px; display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+    .card{
+      background:rgba(255,255,255,.78); border:1px solid var(--line); border-radius:var(--r);
+      box-shadow:0 10px 24px rgba(2,6,23,.08); overflow:hidden;
+      display:flex; flex-direction:column; min-height:320px;
+      transition:transform .15s ease, box-shadow .15s ease;
+    }
+    .card:hover{ transform:translateY(-2px); box-shadow:0 18px 34px rgba(2,6,23,.12); }
+    .cover{ height:140px; background:linear-gradient(135deg, rgba(37,99,235,.20), rgba(6,182,212,.18)); position:relative; overflow:hidden; }
+    .cover img{ width:100%; height:100%; object-fit:cover; display:block; }
+    .cardBody{ padding:12px; display:flex; flex-direction:column; gap:8px; flex:1; }
+    .schoolName{ margin:0; font-weight:1000; font-size:16px; line-height:1.25; }
+    .schoolAddr{ color:var(--muted); font-size:13px; font-weight:800; line-height:1.6; min-height:42px; }
+    .cardActions{ display:flex; gap:10px; margin-top:auto; padding-top:8px; flex-wrap:wrap; }
+    .btn{
+      cursor:pointer; border:1px solid transparent; border-radius:14px;
+      padding:10px 12px; font-weight:1000; font-size:13px;
+      background:linear-gradient(135deg,var(--primary),var(--primary2));
+      color:#fff; text-decoration:none; display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      box-shadow:0 10px 18px rgba(37,99,235,.14); flex:1 1 auto;
+    }
+    .btn.ghost{
+      background:rgba(15,23,42,.04); color:var(--ink);
+      border-color:rgba(15,23,42,.10); box-shadow:none;
     }
 
-    /* ===== Schools grid ===== */
-    .grid{
-      margin-top: 12px;
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
+    /* School view */
+    .toolbar{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between;
+      margin-top: 14px;
     }
-    .card{
-      background: rgba(255,255,255,.78);
-      border: 1px solid var(--line);
-      border-radius: var(--r);
-      box-shadow: 0 10px 24px rgba(2,6,23,.08);
+    .crumb{
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+      color: var(--muted); font-weight: 900;
+    }
+    .crumb a{ color: var(--primary); text-decoration:none; font-weight:1000; }
+    .schoolHero{
+      margin-top: 10px;
+      border-radius: 22px;
       overflow:hidden;
-      display:flex;
-      flex-direction: column;
-      min-height: 320px;
-      transition: transform .15s ease, box-shadow .15s ease;
+      border: 1px solid rgba(255,255,255,.25);
+      box-shadow: var(--shadow);
+      background: #fff;
     }
-    .card:hover{
-      transform: translateY(-2px);
-      box-shadow: 0 18px 34px rgba(2,6,23,.12);
-    }
-    .cover{
-      height: 140px;
-      background: linear-gradient(135deg, rgba(37,99,235,.20), rgba(6,182,212,.18));
+    .schoolHeroCover{
+      height: 210px;
+      background: linear-gradient(135deg, rgba(37,99,235,.26), rgba(6,182,212,.20));
       position: relative;
       overflow:hidden;
     }
-    .cover img{
-      width:100%;height:100%;object-fit:cover; display:block;
-    }
-    .cardBody{
-      padding: 12px;
+    .schoolHeroCover img{ width:100%; height:100%; object-fit:cover; display:block; }
+    .schoolHeroBody{
+      padding: 14px;
       display:flex;
-      flex-direction: column;
-      gap: 8px;
-      flex:1;
-    }
-    .schoolName{
-      margin:0;
-      font-weight: 1000;
-      font-size: 16px;
-      line-height: 1.25;
-    }
-    .schoolAddr{
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 700;
-      line-height: 1.6;
-      min-height: 42px;
-    }
-    .cardActions{
-      display:flex;
-      gap: 10px;
-      margin-top:auto;
-      padding-top: 8px;
+      gap: 14px;
+      align-items: flex-start;
       flex-wrap: wrap;
     }
-    .btn{
-      cursor:pointer;
-      border: 1px solid transparent;
-      border-radius: 14px;
-      padding: 10px 12px;
-      font-weight: 1000;
-      font-size: 13px;
+    .schoolLogo{
+      width: 76px; height: 76px; border-radius: 22px;
+      background: rgba(37,99,235,.10);
+      border: 1px solid rgba(15,23,42,.10);
+      display:grid; place-items:center;
+      font-weight:1000;
+      overflow:hidden;
+      flex: 0 0 auto;
+    }
+    .schoolLogo img{ width:100%; height:100%; object-fit:cover; display:block; }
+    .schoolMeta{ min-width:0; flex: 1 1 auto; }
+    .schoolMeta h2{ margin:0; font-weight:1000; }
+    .schoolMeta .sub{ margin-top:6px; color: var(--muted); font-weight:800; line-height:1.6; }
+    .schoolMeta .addr{ margin-top:6px; color: var(--muted); font-weight:900; }
+
+    /* Teacher/Students top in school page */
+    .twocol{
+      margin-top: 12px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .panel{
+      background:rgba(255,255,255,.78); border:1px solid var(--line); border-radius:var(--r);
+      box-shadow:0 10px 22px rgba(2,6,23,.08);
+      padding: 12px;
+    }
+    .panel h3{ margin:0 0 10px 0; font-weight:1000; font-size:16px; }
+    .rankRow{
+      display:flex; align-items:center; gap:10px;
+      border:1px solid rgba(15,23,42,.08);
+      background: rgba(255,255,255,.8);
+      border-radius: 16px;
+      padding: 10px;
+      margin-top: 8px;
+    }
+    .rankRow .mini{
+      width:44px;height:44px;border-radius:50%;
+      display:grid;place-items:center; font-weight:1000;
+      background: rgba(37,99,235,.10);
+      border: 1px solid rgba(37,99,235,.18);
+      overflow:hidden;
+      flex: 0 0 auto;
+    }
+    .rankRow .mini img{ width:100%;height:100%;object-fit:cover; display:block; }
+    .rankRow .name{ font-weight:1000; }
+    .rankRow .votes{ color: var(--muted); font-weight:900; font-size:13px; }
+    .rankRow .num{
+      margin-inline-start:auto;
+      font-weight:1000;
       background: linear-gradient(135deg, var(--primary), var(--primary2));
       color:#fff;
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      box-shadow: 0 10px 18px rgba(37,99,235,.14);
-      flex: 1 1 auto;
+      border-radius: 12px;
+      padding: 6px 10px;
+      font-size: 13px;
     }
-    .btn.ghost{
-      background: rgba(15,23,42,.04);
-      color: var(--ink);
-      border-color: rgba(15,23,42,.10);
-      box-shadow: none;
+
+    /* Posts */
+    .posts{ margin-top: 12px; }
+    .post{
+      background: rgba(255,255,255,.78);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      box-shadow: 0 10px 22px rgba(2,6,23,.07);
+      padding: 12px;
+      margin-top: 10px;
     }
+    .postHead{ display:flex; gap:10px; align-items:center; }
+    .postHead .mini{ width:42px;height:42px;border-radius:50%; overflow:hidden; display:grid;place-items:center; font-weight:1000; background:#e2e8f0; }
+    .postHead .mini img{ width:100%;height:100%;object-fit:cover; display:block; }
+    .postTitle{ margin:0; font-weight:1000; }
+    .postMeta{ margin-top:2px; color: var(--muted); font-weight:900; font-size:13px; }
+    .postBody{ margin-top: 10px; line-height:1.7; font-weight: 800; color: #0b1220; }
+    .bullets{ margin:8px 0 0; padding:0 18px; color:#0b1220; font-weight:800; }
+
+    /* Modal */
+    .backdrop{
+      position:fixed; inset:0; background: rgba(2,6,23,.55);
+      display:none; align-items:center; justify-content:center;
+      padding: 16px; z-index: 9999;
+    }
+    .backdrop.show{ display:flex; }
+    .modal{
+      width: min(560px, 100%);
+      background: rgba(255,255,255,.95);
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 22px;
+      box-shadow: 0 20px 55px rgba(2,6,23,.25);
+      overflow:hidden;
+    }
+    .modalHead{
+      padding: 12px 14px;
+      display:flex; align-items:center; justify-content:space-between;
+      border-bottom: 1px solid rgba(15,23,42,.10);
+    }
+    .modalHead h4{ margin:0; font-weight:1000; }
+    .modalBody{ padding: 12px 14px; }
+    .row{ display:flex; gap:10px; flex-wrap:wrap; }
+    .field{ display:flex; flex-direction:column; gap:6px; margin-top: 10px; flex: 1 1 200px; }
+    .field label{ color: var(--muted); font-weight: 1000; font-size: 13px; }
+    .field input, .field select, .field textarea{
+      border-radius: 14px;
+      border: 1px solid rgba(15,23,42,.12);
+      background: rgba(255,255,255,.92);
+      padding: 10px 12px;
+      outline: none;
+      font-weight: 900;
+      width: 100%;
+    }
+    textarea{ min-height: 90px; resize: vertical; }
+    .modalFoot{
+      padding: 12px 14px;
+      border-top: 1px solid rgba(15,23,42,.10);
+      display:flex; gap: 10px; justify-content:flex-end; flex-wrap:wrap;
+    }
+    .msg{ margin-top: 10px; font-weight: 1000; }
+    .msg.ok{ color: var(--ok); }
+    .msg.err{ color: var(--danger); }
 
     .footer{
       margin-top: 22px;
       padding: 16px 0 6px;
       color: var(--muted);
-      font-weight: 800;
+      font-weight: 900;
       font-size: 13px;
       display:flex;
       gap:10px;
@@ -318,6 +294,7 @@
     @media (max-width: 980px){
       .top3{ grid-template-columns: 1fr; }
       .grid{ grid-template-columns: repeat(2, 1fr); }
+      .twocol{ grid-template-columns: 1fr; }
     }
     @media (max-width: 640px){
       .grid{ grid-template-columns: 1fr; }
@@ -329,66 +306,176 @@
 
 <body>
   <div class="container">
-    <!-- HERO -->
-    <section class="hero" aria-label="Hero">
-      <div class="heroInner">
-        <div class="brand">
-          <div class="logo">S</div>
-          <div>
-            <h1 class="heroTitle">school.sy</h1>
-            <div class="heroSub">
-              دليل المدارس + صفحات مدارس تفاعلية (أفضل المعلمين/الطلاب + منشورات + اختبارات).
+
+    <!-- ============ HOME VIEW ============ -->
+    <div id="viewHome">
+      <section class="hero">
+        <div class="heroInner">
+          <div class="brand">
+            <div class="logo">S</div>
+            <div>
+              <h1 class="heroTitle">school.sy</h1>
+              <div class="heroSub">دليل المدارس + صفحات مدارس تفاعلية (أفضل المعلمين/الطلاب + منشورات + اختبارات).</div>
             </div>
+          </div>
+          <div class="heroBadges">
+            <div class="chip">📍 بحث حسب المدينة</div>
+            <div class="chip">🏆 توب 3 مدارس</div>
+            <div class="chip">🗺️ خرائط Google</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="sectionHead">
+          <h2>🏆 أفضل المدارس (Top 3)</h2>
+          <div class="hint">حسب votesCount داخل وثيقة المدرسة (مؤقتًا)</div>
+        </div>
+        <div class="top3" id="top3"></div>
+      </section>
+
+      <section class="section">
+        <div class="sectionHead">
+          <h2>🏫 مدارس سوريا</h2>
+          <div class="hint">ابحث بالاسم أو اختر المدينة</div>
+        </div>
+
+        <div class="filters">
+          <input id="searchBox" placeholder="ابحث باسم المدرسة..." />
+          <select id="citySelect">
+            <option value="">كل المدن</option>
+          </select>
+          <div class="count" id="countLabel">تحميل...</div>
+        </div>
+
+        <div class="grid" id="schoolsGrid"></div>
+      </section>
+
+      <div class="footer">
+        <span>school.sy ©</span><span>•</span><span>تطوير: Zakaria KeFo</span>
+      </div>
+    </div>
+
+    <!-- ============ SCHOOL VIEW (SPA) ============ -->
+    <div id="viewSchool" class="hidden">
+      <div class="toolbar">
+        <div class="crumb">
+          <a href="#/">⬅ العودة للرئيسية</a>
+          <span>•</span>
+          <span id="crumbSchool">—</span>
+        </div>
+
+        <div class="row">
+          <a id="btnMaps" class="btn ghost" href="#" target="_blank" rel="noopener">🗺️ خرائط Google</a>
+          <button id="btnRequestAccount" class="btn">طلب حساب (طالب/ولي أمر)</button>
+        </div>
+      </div>
+
+      <section class="schoolHero">
+        <div class="schoolHeroCover" id="schoolCover"></div>
+        <div class="schoolHeroBody">
+          <div class="schoolLogo" id="schoolLogo">S</div>
+          <div class="schoolMeta">
+            <h2 id="schoolName">—</h2>
+            <div class="sub" id="schoolDesc">—</div>
+            <div class="addr" id="schoolAddr">—</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="sectionHead">
+          <h2>⭐ الأفضل في هذه المدرسة</h2>
+          <div class="hint">تحديث تلقائي حسب leaderboards/{schoolId}</div>
+        </div>
+
+        <div class="twocol">
+          <div class="panel">
+            <h3>🏅 أفضل المعلمين (Top 3)</h3>
+            <div id="topTeachers"></div>
+          </div>
+          <div class="panel">
+            <h3>🏅 أفضل الطلاب (Top 3)</h3>
+            <div id="topStudents"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section posts">
+        <div class="sectionHead">
+          <h2>📌 منشورات المعلمين والإدارة</h2>
+          <div class="hint">من collection: posts (مع schoolId)</div>
+        </div>
+        <div id="postsList"></div>
+      </section>
+
+      <div class="footer">
+        <span>school.sy ©</span><span>•</span><span>تطوير: Zakaria KeFo</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Modal: Account request (student/parent) ===== -->
+  <div class="backdrop" id="modalBackdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modalHead">
+        <h4>طلب حساب</h4>
+        <button id="btnCloseModal" class="btn ghost" style="flex:0 0 auto; padding:8px 10px;">✖</button>
+      </div>
+      <div class="modalBody">
+        <div class="row">
+          <div class="field">
+            <label>الدور</label>
+            <select id="reqRole">
+              <option value="student">طالب</option>
+              <option value="parent">ولي أمر</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label id="labelName">اسم الطالب</label>
+            <input id="reqName" placeholder="اكتب الاسم هنا..." />
           </div>
         </div>
 
-        <div class="heroBadges">
-          <div class="chip">📍 ابحث حسب المدينة</div>
-          <div class="chip">🏆 توب 3 مدارس</div>
-          <div class="chip">🗺️ خرائط Google</div>
+        <div class="field">
+          <label>ملاحظة (اختياري)</label>
+          <textarea id="reqNote" placeholder="مثال: الصف/الشعبة/رقم للتواصل..."></textarea>
         </div>
+
+        <div id="reqMsg" class="msg"></div>
       </div>
-    </section>
-
-    <!-- TOP 3 SCHOOLS -->
-    <section class="section">
-      <div class="sectionHead">
-        <h2>🏆 أفضل المدارس (Top 3)</h2>
-        <div class="hint">حسب التصويت — (سنربط التصويت لاحقًا)</div>
+      <div class="modalFoot">
+        <button id="btnSendRequest" class="btn">إرسال الطلب</button>
       </div>
-      <div class="top3" id="top3"></div>
-    </section>
-
-    <!-- FILTERS -->
-    <section class="section">
-      <div class="sectionHead">
-        <h2>🏫 مدارس سوريا</h2>
-        <div class="hint">ابحث بالاسم أو اختر المدينة</div>
-      </div>
-
-      <div class="filters">
-        <input id="searchBox" placeholder="ابحث باسم المدرسة..." />
-        <select id="citySelect">
-          <option value="">كل المدن</option>
-        </select>
-        <div class="count" id="countLabel">—</div>
-      </div>
-
-      <div class="grid" id="schoolsGrid"></div>
-    </section>
-
-    <div class="footer">
-      <span>school.sy ©</span>
-      <span>•</span>
-      <span>تطوير: Zakaria KeFo</span>
     </div>
   </div>
 
   <!-- =========================
-       Firebase + Home Logic
+       Firebase + SPA Logic
   ========================== -->
   <script type="module">
-    // 1) ضع firebaseConfig الخاص بك هنا (موجود عندك)
+    /* ========= 0) Copy / right-click protection (best effort) ========= */
+    (function(){
+      document.addEventListener("contextmenu", e => e.preventDefault());
+      document.addEventListener("dragstart", e => e.preventDefault());
+      document.addEventListener("selectstart", e => e.preventDefault());
+      document.addEventListener("copy", e => { e.preventDefault(); });
+      document.addEventListener("cut", e => { e.preventDefault(); });
+      document.addEventListener("keydown", (e) => {
+        const k = (e.key||"").toLowerCase();
+        // منع أكثر الاختصارات شيوعًا
+        if ((e.ctrlKey || e.metaKey) && ["c","x","u","s","p","a"].includes(k)) e.preventDefault();
+        if (e.key === "PrintScreen") e.preventDefault();
+      });
+
+      // منع الضغط المطوّل على الموبايل قدر الإمكان
+      let t = null;
+      document.addEventListener("touchstart", () => { t = setTimeout(()=>{}, 500); }, {passive:true});
+      document.addEventListener("touchend", () => { if(t) clearTimeout(t); t=null; }, {passive:true});
+    })();
+
+    /* ========= 1) Firebase config ========= */
     const firebaseConfig = {
       apiKey: "AIzaSyCexRHqxd8Xm_EBWMEnLj_2WAjxJcgXf9g",
       authDomain: "school-sy.firebaseapp.com",
@@ -398,43 +485,98 @@
       appId: "1:121186119852:web:f96d12deade6cebbda6f09"
     };
 
-    // 2) Imports (CDN) — مناسب لـ GitHub Pages
+    /* ========= 2) Firebase imports (CDN) ========= */
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
     import {
-      getFirestore, collection, query, orderBy, limit, onSnapshot
+      getFirestore,
+      collection,
+      doc,
+      getDoc,
+      addDoc,
+      onSnapshot,
+      query,
+      where,
+      orderBy,
+      limit,
+      serverTimestamp
     } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
+    /* ========= 3) DOM helpers ========= */
     const $ = (id) => document.getElementById(id);
+    const esc = (s) => String(s||"").replace(/[&<>"']/g, c => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+    }[c]));
+    const slugify = (s) => (s||"")
+      .toString().trim().toLowerCase()
+      .replace(/\s+/g,"-")
+      .replace(/[^\w\u0600-\u06FF-]+/g,"")
+      .replace(/-+/g,"-")
+      .slice(0,60);
 
+    /* ========= 4) Views ========= */
+    const viewHome = $("viewHome");
+    const viewSchool = $("viewSchool");
     const top3El = $("top3");
     const gridEl = $("schoolsGrid");
     const searchBox = $("searchBox");
     const citySelect = $("citySelect");
     const countLabel = $("countLabel");
 
-    const esc = (s) => String(s || "").replace(/[&<>"']/g, c => ({
-      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-    }[c]));
+    // School view elements
+    const crumbSchool = $("crumbSchool");
+    const schoolCover = $("schoolCover");
+    const schoolLogo = $("schoolLogo");
+    const schoolName = $("schoolName");
+    const schoolDesc = $("schoolDesc");
+    const schoolAddr = $("schoolAddr");
+    const btnMaps = $("btnMaps");
+    const topTeachers = $("topTeachers");
+    const topStudents = $("topStudents");
+    const postsList = $("postsList");
 
-    // ===== Local state
-    let allSchools = [];        // {id, name, city, address, logoURL, coverURL, mapsUrl, votesCount}
-    let topSchools = [];        // Top 3 by votesCount
+    /* ========= 5) State ========= */
+    let allSchools = [];
+    let topSchools = [];
+    let unsubSchool = null;
+    let unsubBoards = null;
+    let unsubPosts = null;
+    let currentSchoolId = null;
+    let currentSchool = null;
 
+    function showHome(){
+      viewHome.classList.remove("hidden");
+      viewSchool.classList.add("hidden");
+      document.title = "school.sy";
+      cleanupSchoolListeners();
+    }
+
+    function showSchool(){
+      viewHome.classList.add("hidden");
+      viewSchool.classList.remove("hidden");
+    }
+
+    function cleanupSchoolListeners(){
+      if (typeof unsubSchool === "function") unsubSchool();
+      if (typeof unsubBoards === "function") unsubBoards();
+      if (typeof unsubPosts === "function") unsubPosts();
+      unsubSchool = unsubBoards = unsubPosts = null;
+      currentSchoolId = null;
+      currentSchool = null;
+    }
+
+    /* ========= 6) Home render ========= */
     function mapsLink(s){
-      // أولوية: إذا كان عندك mapsUrl مخزن
       if (s.mapsUrl) return s.mapsUrl;
-
-      // وإلا: ابني رابط بحث باستخدام الاسم + المدينة + العنوان
-      const q = encodeURIComponent(`${s.name || ""} ${s.city || ""} ${s.address || ""}`.trim());
+      const q = encodeURIComponent(`${s.name||""} ${s.city||""} ${s.address||""}`.trim());
       return `https://www.google.com/maps/search/?api=1&query=${q}`;
     }
 
-    function schoolPageLink(s){
-      // صفحة المدرسة سننشئها لاحقًا
-      return `./school.html?sid=${encodeURIComponent(s.id)}`;
+    function schoolHash(s){
+      const slug = slugify(s.name);
+      return `#/school/${encodeURIComponent(s.id)}-${encodeURIComponent(slug)}`;
     }
 
     function renderTop3(){
@@ -455,35 +597,23 @@
           </div>
           <div class="rank">#${i+1}</div>
         `;
+        el.addEventListener("click", () => { location.hash = schoolHash(s); });
         top3El.appendChild(el);
       }
     }
 
     function fillCities(){
-      const cities = Array.from(new Set(allSchools.map(s => (s.city || "").trim()).filter(Boolean))).sort((a,b)=>a.localeCompare(b,'ar'));
+      const cities = Array.from(new Set(allSchools.map(s => (s.city || "").trim()).filter(Boolean)))
+        .sort((a,b)=>a.localeCompare(b,'ar'));
       const current = citySelect.value;
       citySelect.innerHTML = `<option value="">كل المدن</option>` + cities.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join("");
-      citySelect.value = current; // حاول الحفاظ على الاختيار
-    }
-
-    function applyFilters(){
-      const q = (searchBox.value || "").trim().toLowerCase();
-      const city = (citySelect.value || "").trim();
-
-      const filtered = allSchools.filter(s => {
-        const okCity = !city || (s.city || "").trim() === city;
-        const okQ = !q || (s.name || "").toLowerCase().includes(q) || (s.address || "").toLowerCase().includes(q);
-        return okCity && okQ;
-      });
-
-      renderSchools(filtered);
-      countLabel.textContent = `عدد المدارس: ${filtered.length}`;
+      citySelect.value = current;
     }
 
     function renderSchools(list){
       gridEl.innerHTML = "";
       if (!list.length){
-        gridEl.innerHTML = `<div style="grid-column:1/-1;color:#64748b;font-weight:900;padding:10px">لا توجد نتائج مطابقة.</div>`;
+        gridEl.innerHTML = `<div style="grid-column:1/-1;color:#64748b;font-weight:1000;padding:10px">لا توجد نتائج مطابقة.</div>`;
         return;
       }
 
@@ -503,7 +633,7 @@
 
             <div class="cardActions">
               <a class="btn ghost" href="${esc(mapsLink(s))}" target="_blank" rel="noopener">🗺️ خرائط Google</a>
-              <a class="btn" href="${esc(schoolPageLink(s))}">فتح صفحة المدرسة</a>
+              <a class="btn" href="${esc(schoolHash(s))}">فتح صفحة المدرسة</a>
             </div>
           </div>
         `;
@@ -511,46 +641,289 @@
       }
     }
 
-    // ===== Listen Schools (Firestore)
-    // متوقع أن عندك collection: schools
-    // fields المقترحة: name, city, address, logoURL, coverURL, mapsUrl, votesCount
-    const schoolsQ = query(collection(db, "schools"), orderBy("name"), limit(500));
+    function applyFilters(){
+      const q = (searchBox.value || "").trim().toLowerCase();
+      const city = (citySelect.value || "").trim();
 
-    onSnapshot(schoolsQ, (snap) => {
+      const filtered = allSchools.filter(s => {
+        const okCity = !city || (s.city || "").trim() === city;
+        const okQ = !q || (s.name || "").toLowerCase().includes(q) || (s.address || "").toLowerCase().includes(q);
+        return okCity && okQ;
+      });
+
+      renderSchools(filtered);
+      countLabel.textContent = `عدد المدارس: ${filtered.length}`;
+    }
+
+    searchBox.addEventListener("input", applyFilters);
+    citySelect.addEventListener("change", applyFilters);
+
+    /* ========= 7) School view render ========= */
+    function renderRank(container, arr){
+      container.innerHTML = "";
+      const safe = Array.isArray(arr) ? arr : [];
+      for(let i=0;i<3;i++){
+        const it = safe[i] || { displayName:"—", count:0, photoURL:"" };
+        const row = document.createElement("div");
+        row.className = "rankRow";
+        row.innerHTML = `
+          <div class="mini">${it.photoURL ? `<img src="${esc(it.photoURL)}" alt="">` : (esc(it.displayName)[0] || "؟")}</div>
+          <div>
+            <div class="name">${esc(it.displayName || "—")}</div>
+            <div class="votes">عدد المصوّتين: ${Number(it.count||0)}</div>
+          </div>
+          <div class="num">#${i+1}</div>
+        `;
+        container.appendChild(row);
+      }
+    }
+
+    function renderPosts(items){
+      postsList.innerHTML = "";
+      if (!items.length){
+        postsList.innerHTML = `<div class="hint">لا توجد منشورات بعد.</div>`;
+        return;
+      }
+
+      for (const p of items){
+        const box = document.createElement("div");
+        box.className = "post";
+
+        const typeLabel = p.type === "mcq" ? "اختبار (اختيار من متعدد)" : "منشور";
+        const authorName = p.authorName || "معلم/إدارة";
+
+        let body = "";
+        if (p.type === "mcq"){
+          const opts = (p.mcq?.options || []).map(x => `<li>${esc(x)}</li>`).join("");
+          body = `
+            <div class="postBody">
+              <div style="font-weight:1000">سؤال:</div>
+              <div style="margin-top:6px">${esc(p.mcq?.question || "")}</div>
+              <ul class="bullets">${opts}</ul>
+            </div>
+          `;
+        } else {
+          body = `<div class="postBody">${esc(p.content || "")}</div>`;
+        }
+
+        box.innerHTML = `
+          <div class="postHead">
+            <div class="mini">${p.authorPhoto ? `<img src="${esc(p.authorPhoto)}" alt="">` : (esc(authorName)[0] || "م")}</div>
+            <div style="min-width:0">
+              <p class="postTitle">${esc(p.title || "بدون عنوان")}</p>
+              <div class="postMeta">${esc(typeLabel)} • ${esc(authorName)}</div>
+            </div>
+          </div>
+          ${body}
+        `;
+        postsList.appendChild(box);
+      }
+    }
+
+    async function loadSchool(schoolId){
+      cleanupSchoolListeners();
+      currentSchoolId = schoolId;
+      showSchool();
+
+      // 1) School doc
+      unsubSchool = onSnapshot(doc(db, "schools", schoolId), (snap) => {
+        if (!snap.exists()){
+          crumbSchool.textContent = "مدرسة غير موجودة";
+          schoolName.textContent = "مدرسة غير موجودة";
+          schoolDesc.textContent = "لا يوجد بيانات لهذه المدرسة.";
+          schoolAddr.textContent = "";
+          btnMaps.href = "#/";
+          return;
+        }
+
+        currentSchool = { id: snap.id, ...(snap.data()||{}) };
+
+        const nm = currentSchool.name || "مدرسة";
+        crumbSchool.textContent = nm;
+        document.title = `${nm} — school.sy`;
+
+        // cover
+        if (currentSchool.coverURL){
+          schoolCover.innerHTML = `<img src="${esc(currentSchool.coverURL)}" alt="">`;
+        } else {
+          schoolCover.innerHTML = "";
+        }
+
+        // logo
+        if (currentSchool.logoURL){
+          schoolLogo.innerHTML = `<img src="${esc(currentSchool.logoURL)}" alt="">`;
+        } else {
+          schoolLogo.textContent = (nm[0] || "S");
+        }
+
+        schoolName.textContent = nm;
+        schoolDesc.textContent = currentSchool.description || "صفحة المدرسة: أفضل المعلمين/الطلاب + منشورات + اختبارات.";
+        schoolAddr.textContent = `📍 ${currentSchool.city || "—"} • ${currentSchool.address || ""}`;
+
+        btnMaps.href = (currentSchool.mapsUrl) ? currentSchool.mapsUrl : mapsLink(currentSchool);
+      });
+
+      // 2) Leaderboards doc (per school)
+      unsubBoards = onSnapshot(doc(db, "leaderboards", schoolId), (snap) => {
+        const d = snap.data() || {};
+        renderRank(topTeachers, d.teachersTop || []);
+        renderRank(topStudents, d.studentsTop || []);
+      });
+
+      // 3) Posts (where schoolId)
+      // قد يطلب Firestore Index أول مرة — إذا ظهر خطأ index، سأعطيك خطوة إنشاءه.
+      const qPosts = query(
+        collection(db, "posts"),
+        where("schoolId", "==", schoolId),
+        orderBy("createdAt", "desc"),
+        limit(30)
+      );
+
+      unsubPosts = onSnapshot(qPosts, (snap) => {
+        const arr = [];
+        snap.forEach(d => arr.push({ id: d.id, ...(d.data()||{}) }));
+        renderPosts(arr);
+      }, (err) => {
+        console.error(err);
+        postsList.innerHTML = `<div class="msg err">❌ خطأ في قراءة المنشورات. إذا ظهر خطأ Index أخبرني وسأعطيك الرابط الصحيح لإنشاءه.</div>`;
+      });
+    }
+
+    /* ========= 8) Routing (Hash) ========= */
+    function parseRoute(){
+      const h = (location.hash || "#/").replace(/^#/, "");
+      if (h === "/" || h === "") return { view:"home" };
+
+      const m = h.match(/^\/school\/([^\/]+)$/);
+      if (m){
+        // format: <id>-<slug>
+        const raw = decodeURIComponent(m[1]);
+        const id = raw.split("-")[0]; // نأخذ id قبل أول "-"
+        return { view:"school", schoolId:id };
+      }
+      return { view:"home" };
+    }
+
+    async function route(){
+      const r = parseRoute();
+      if (r.view === "home"){
+        showHome();
+      } else {
+        await loadSchool(r.schoolId);
+      }
+    }
+    window.addEventListener("hashchange", route);
+
+    /* ========= 9) Modal: student/parent request ========= */
+    const modalBackdrop = $("modalBackdrop");
+    const btnCloseModal = $("btnCloseModal");
+    const btnRequestAccount = $("btnRequestAccount");
+    const btnSendRequest = $("btnSendRequest");
+    const reqRole = $("reqRole");
+    const reqName = $("reqName");
+    const reqNote = $("reqNote");
+    const reqMsg = $("reqMsg");
+    const labelName = $("labelName");
+
+    function openModal(){
+      reqMsg.textContent = "";
+      reqMsg.className = "msg";
+      reqRole.value = "student";
+      reqName.value = "";
+      reqNote.value = "";
+      labelName.textContent = "اسم الطالب";
+      modalBackdrop.classList.add("show");
+      modalBackdrop.setAttribute("aria-hidden","false");
+    }
+    function closeModal(){
+      modalBackdrop.classList.remove("show");
+      modalBackdrop.setAttribute("aria-hidden","true");
+    }
+
+    btnRequestAccount.addEventListener("click", () => {
+      if (!currentSchoolId) return;
+      openModal();
+    });
+    btnCloseModal.addEventListener("click", closeModal);
+    modalBackdrop.addEventListener("click", (e) => { if (e.target === modalBackdrop) closeModal(); });
+
+    reqRole.addEventListener("change", () => {
+      labelName.textContent = (reqRole.value === "parent") ? "أهل الطالب: اسم الطالب" : "اسم الطالب";
+    });
+
+    btnSendRequest.addEventListener("click", async () => {
+      reqMsg.textContent = "";
+      reqMsg.className = "msg";
+
+      if (!currentSchoolId){
+        reqMsg.textContent = "خطأ: لم يتم تحديد المدرسة.";
+        reqMsg.classList.add("err");
+        return;
+      }
+
+      const role = reqRole.value;
+      const name = (reqName.value || "").trim();
+      const note = (reqNote.value || "").trim();
+
+      if (!name){
+        reqMsg.textContent = "الاسم مطلوب";
+        reqMsg.classList.add("err");
+        return;
+      }
+
+      try{
+        await addDoc(collection(db, "account_requests"), {
+          schoolId: currentSchoolId,
+          role: role, // student | parent
+          displayName: name,
+          note: note,
+          status: "pending",
+          createdAt: serverTimestamp()
+        });
+
+        reqMsg.textContent = "✅ تم إرسال الطلب، سيتم مراجعته من إدارة المدرسة.";
+        reqMsg.classList.add("ok");
+        setTimeout(closeModal, 900);
+      }catch(e){
+        console.error(e);
+        reqMsg.textContent = "❌ فشل الإرسال (تحقق من Rules).";
+        reqMsg.classList.add("err");
+      }
+    });
+
+    /* ========= 10) Schools list listener ========= */
+    // نقرأ كل المدارس ثم نفلتر محليًا (بسيط وسريع للمراحل الأولى)
+    // fields المستخدمة: name, city, address, logoURL, coverURL, mapsUrl, votesCount, description
+    const qSchools = query(collection(db, "schools"), orderBy("name"), limit(800));
+
+    onSnapshot(qSchools, (snap) => {
       const arr = [];
-      snap.forEach(doc => {
-        const d = doc.data() || {};
+      snap.forEach(docu => {
+        const d = docu.data() || {};
         arr.push({
-          id: doc.id,
+          id: docu.id,
           name: d.name || "",
           city: d.city || "",
           address: d.address || "",
           logoURL: d.logoURL || "",
           coverURL: d.coverURL || "",
           mapsUrl: d.mapsUrl || "",
-          votesCount: Number(d.votesCount || 0) // مؤقتًا داخل وثيقة المدرسة
+          votesCount: Number(d.votesCount || 0),
+          description: d.description || ""
         });
       });
 
       allSchools = arr;
-
-      // Top 3 حسب votesCount (مؤقتًا) — لاحقًا نجعله من leaderboards
       topSchools = [...allSchools].sort((a,b) => (b.votesCount||0) - (a.votesCount||0));
 
       renderTop3();
       fillCities();
       applyFilters();
-    }, (err) => {
-      console.error(err);
-      top3El.innerHTML = `<div style="color:#b91c1c;font-weight:900">خطأ في قراءة المدارس من Firestore. تأكد من وجود collection باسم schools.</div>`;
+      if (!countLabel.textContent || countLabel.textContent === "تحميل...") countLabel.textContent = `عدد المدارس: ${allSchools.length}`;
     });
 
-    // Events
-    searchBox.addEventListener("input", applyFilters);
-    citySelect.addEventListener("change", applyFilters);
-
-    // UI initial
-    countLabel.textContent = "تحميل...";
+    /* ========= 11) Start ========= */
+    route();
   </script>
 </body>
 </html>
