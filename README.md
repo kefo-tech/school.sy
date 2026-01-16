@@ -1,1 +1,1 @@
-# school.sy
+# school sy
