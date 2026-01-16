@@ -281,3 +281,132 @@ $("btnPublishMCQ").onclick = async () => {
   const correctIndex = Number($("qCorrect").value);
 
   if (!question || !a || !b || !c || !d){
+    $("mcqMsg").textContent = "املأ السؤال وكل الخيارات";
+    return;
+  }
+
+  await addDoc(collection(db, "posts"), {
+    authorUid: auth.currentUser.uid,
+    authorName: currentProfile.displayName || "Teacher",
+    authorPhoto: currentProfile.photoURL || "",
+    role: currentProfile.role,
+    type: "mcq",
+    title: "نموذج اختيار من متعدد",
+    content: "",
+    mcq: { question, options:[a,b,c,d], correctIndex },
+    schoolId,
+    createdAt: serverTimestamp()
+  });
+
+  $("mcqMsg").textContent = "✅ تم نشر النموذج";
+  $("qQuestion").value = $("qA").value = $("qB").value = $("qC").value = $("qD").value = "";
+  $("qCorrect").value = "0";
+};
+
+/* ====== 10) Functions calls (Developer approve + vote) ====== */
+const approveReq = httpsCallable(fn, "approveAccountRequest");
+const rejectReq  = httpsCallable(fn, "rejectAccountRequest");
+const addVoteFn  = httpsCallable(fn, "addVote");
+
+function renderRequests(list){
+  const wrap = $("requestsList");
+  wrap.innerHTML = "";
+  if (!list.length){
+    wrap.innerHTML = `<div class="muted small">لا توجد طلبات</div>`;
+    return;
+  }
+
+  list.forEach((r) => {
+    const div = document.createElement("div");
+    div.className = "item";
+    div.innerHTML = `
+      <div class="itemRow">
+        <div style="font-weight:900">${esc(r.displayName)}</div>
+        <div class="muted small">(${esc(r.role)})</div>
+        <div class="muted small">${esc(r.phone||"")}</div>
+        <div class="itemActions">
+          <button class="btnSm ok">Approve</button>
+          <button class="btnSm no">Reject</button>
+        </div>
+      </div>
+      <div class="muted small">ID: ${esc(r.id)}</div>
+    `;
+
+    div.querySelector(".ok").onclick = async () => {
+      const password = $("devPassword").value;
+      if (!password || password.length < 6){
+        alert("ضع كلمة مرور (6+) أولاً.");
+        return;
+      }
+      const res = await approveReq({ requestId: r.id, password });
+      alert(`✅ Approved\nCode: ${res.data.code}`);
+    };
+
+    div.querySelector(".no").onclick = async () => {
+      await rejectReq({ requestId: r.id });
+      alert("✅ Rejected");
+    };
+
+    wrap.appendChild(div);
+  });
+}
+
+$("btnVote").onclick = async () => {
+  $("voteMsg").textContent = "";
+  const targetUid = $("voteUid").value.trim();
+  const kind = $("voteType").value;
+  if (!targetUid){ $("voteMsg").textContent = "أدخل UID"; return; }
+
+  try{
+    await addVoteFn({ targetUid, kind, schoolId });
+    $("voteMsg").textContent = "✅ تم التصويت";
+  }catch(e){
+    $("voteMsg").textContent = "خطأ: " + (e?.message || e);
+  }
+};
+
+/* ====== 11) Auth state -> role routing ====== */
+onAuthStateChanged(auth, async (user) => {
+  $("btnLogout").classList.toggle("hidden", !user);
+
+  if (!user){
+    currentProfile = null;
+    hide($("dashDeveloper"));
+    hide($("dashTeacherAdmin"));
+    showView("public");
+    return;
+  }
+
+  const usnap = await getDoc(doc(db, "users", user.uid));
+  if (!usnap.exists()){
+    await signOut(auth);
+    return;
+  }
+
+  currentProfile = usnap.data();
+
+  $("dashUser").textContent = `الدور: ${currentProfile.role} • الكود: ${currentProfile.code || "—"}`;
+  $("dashTitle").textContent = currentProfile.role === "developer" ? "لوحة المطوّر" : "لوحة المعلم/الإدارة";
+
+  const isDev = currentProfile.role === "developer";
+  const isTA  = currentProfile.role === "teacher" || currentProfile.role === "admin";
+
+  $("dashDeveloper").classList.toggle("hidden", !isDev);
+  $("dashTeacherAdmin").classList.toggle("hidden", !isTA);
+
+  showView("dash");
+
+  if (isDev){
+    const rq = query(collection(db, "account_requests"), orderBy("createdAt","desc"), limit(50));
+    onSnapshot(rq, (snap) => {
+      const arr = [];
+      snap.forEach((d) => {
+        const x = d.data();
+        if (x.status === "pending" && (x.schoolId||"default") === schoolId){
+          arr.push({ id: d.id, ...x });
+        }
+      });
+      renderRequests(arr);
+    });
+  }
+});
