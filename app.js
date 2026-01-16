@@ -38,10 +38,23 @@ function banner(msg){
 
 /* ====== 1) Firebase Config (ضعه هنا) ====== */
 const firebaseConfig = {
-  // apiKey: "...",
-  // authDomain: "...",
-  // projectId: "...",
-  // appId: "...",
+  // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyCexRHqxd8Xm_EBWMEnLj_2WAjxJcgXf9g",
+  authDomain: "school-sy.firebaseapp.com",
+  projectId: "school-sy",
+  storageBucket: "school-sy.firebasestorage.app",
+  messagingSenderId: "121186119852",
+  appId: "1:121186119852:web:f96d12deade6cebbda6f09"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 };
 
 /* Fail-safe */
