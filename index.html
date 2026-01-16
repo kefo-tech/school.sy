@@ -3,76 +3,211 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <title>school.sy – منصة تعليمية</title>
-
-  <!-- CSS -->
   <link rel="stylesheet" href="./styles.css">
-
-  <!-- حماية من الكاش -->
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
 </head>
 <body>
 
-  <!-- شريط علوي بسيط مضمون -->
-  <div style="
-    padding:14px;
-    text-align:center;
-    font-weight:900;
-    font-size:22px;
-    border-bottom:1px solid rgba(0,0,0,.1);
-  ">
-    school.sy – منصة تعليمية
-  </div>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">S</div>
+      <div>
+        <div class="title" id="schoolName">school.sy</div>
+        <div class="subtitle">منصة تعليمية تربط المدرسة بالطلاب والمعلمين والأهل</div>
+      </div>
+    </div>
 
-  <!-- رسالة تأكيد تحميل الصفحة -->
-  <div id="bootCheck" style="
-    margin:20px;
-    padding:14px;
-    border-radius:12px;
-    background:#0f172a;
-    color:#fff;
-    font-family:system-ui;
-  ">
-    ✅ تم تحميل index.html بنجاح<br>
-    ⏳ جاري تحميل app.js ...
-  </div>
+    <nav class="actions">
+      <button class="btn ghost" id="btnGoPublic">الرئيسية</button>
+      <button class="btn ghost" id="btnGoLogin">تسجيل الدخول</button>
+      <button class="btn" id="btnGoRequest">طلب حساب</button>
+      <button class="btn danger hidden" id="btnLogout">تسجيل خروج</button>
+    </nav>
+  </header>
 
-  <!-- التطبيق -->
-  <main id="appRoot">
+  <main class="container" id="appRoot">
 
-    <!-- واجهة عامة (ستظهر حتى لو تعطل JS) -->
-    <section id="viewPublic">
-      <h2 style="margin:20px">👋 أهلاً بك في school.sy</h2>
-      <p style="margin:20px;color:gray">
-        إذا كنت ترى هذه الرسالة فهذا يعني أن GitHub Pages يعمل بنجاح.
-      </p>
+    <!-- PUBLIC -->
+    <section id="viewPublic" class="view">
+      <div class="grid2">
+        <div class="card hero">
+          <h2>👋 مرحباً بك في school.sy</h2>
+          <p class="muted">
+            ستجد أفضل 3 معلمين وطلاب حسب التصويت (تحديث كل ساعة)، ومنشورات المعلمين (معلومات + اختيار من متعدد).
+          </p>
+          <div class="heroGlow"></div>
+        </div>
+
+        <div class="card">
+          <h3>⚡ كيف تعمل المنصة؟</h3>
+          <ul class="bullets muted">
+            <li>المعلم/الطالب/الإدارة يقدم طلب حساب.</li>
+            <li>المطوّر يوافق ويولّد كود KeFo + كلمة مرور.</li>
+            <li>المنشورات والنماذج تنشر من المعلمين/الإدارة.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="sectionTitle">
+        <h2>🏆 أفضل 3 معلمين</h2>
+        <div class="hint">تحديث تلقائي كل ساعة</div>
+      </div>
+      <div class="rankRow" id="teachersTop"></div>
+
+      <div class="sectionTitle">
+        <h2>🌟 أفضل 3 طلاب</h2>
+        <div class="hint">تحديث تلقائي كل ساعة</div>
+      </div>
+      <div class="rankRow" id="studentsTop"></div>
+
+      <div class="sectionTitle">
+        <h2>📌 منشورات المعلمين</h2>
+        <div class="hint">معلومات + اختيار من متعدد</div>
+      </div>
+      <div class="posts" id="postsList"></div>
     </section>
 
-    <!-- بقية الواجهات (سيتم التحكم بها من app.js) -->
-    <section id="viewLogin" class="hidden"></section>
-    <section id="viewRequest" class="hidden"></section>
-    <section id="viewDashboard" class="hidden"></section>
+    <!-- LOGIN -->
+    <section id="viewLogin" class="view hidden">
+      <div class="card">
+        <h2>تسجيل الدخول</h2>
+        <p class="muted">استخدم الكود الذي يبدأ بـ KeFo وكلمة المرور التي وصلتك.</p>
+
+        <div class="form">
+          <label>كود الدخول</label>
+          <input id="loginCode" placeholder="KeFo123456" />
+
+          <label>كلمة المرور</label>
+          <input id="loginPass" type="password" placeholder="••••••••" />
+
+          <button class="btn" id="btnLogin">دخول</button>
+          <div class="small muted" id="loginMsg"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REQUEST -->
+    <section id="viewRequest" class="view hidden">
+      <div class="card">
+        <h2>طلب تسجيل حساب</h2>
+        <p class="muted">املأ البيانات وسيصل الطلب للمطوّر للمراجعة.</p>
+
+        <div class="form">
+          <label>الدور المطلوب</label>
+          <select id="reqRole">
+            <option value="teacher">معلم</option>
+            <option value="admin">إدارة</option>
+            <option value="student">طالب</option>
+            <option value="parent">ولي أمر</option>
+          </select>
+
+          <label>الاسم</label>
+          <input id="reqName" placeholder="الاسم الكامل" />
+
+          <label>هاتف/واتساب (اختياري)</label>
+          <input id="reqPhone" placeholder="+49..." />
+
+          <label>ملاحظة (اختياري)</label>
+          <textarea id="reqNote" rows="3" placeholder="اختصاص / صف / معلومات إضافية"></textarea>
+
+          <button class="btn" id="btnSendRequest">إرسال الطلب</button>
+          <div class="small muted" id="reqMsg"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section id="viewDashboard" class="view hidden">
+      <div class="grid2">
+        <div class="card">
+          <h2 id="dashTitle">لوحة التحكم</h2>
+          <div class="small muted" id="dashUser"></div>
+          <hr class="sep"/>
+
+          <!-- Teacher/Admin -->
+          <div id="dashTeacherAdmin" class="hidden">
+            <h3>نشر محتوى</h3>
+
+            <div class="tabs">
+              <button class="chip active" data-tab="post">منشور</button>
+              <button class="chip" data-tab="mcq">اختيار من متعدد</button>
+            </div>
+
+            <div class="form" id="postForm">
+              <label>عنوان</label>
+              <input id="pTitle" placeholder="عنوان المنشور" />
+              <label>محتوى</label>
+              <textarea id="pContent" rows="4" placeholder="اكتب المحتوى..."></textarea>
+              <button class="btn" id="btnPublishPost">نشر</button>
+              <div class="small muted" id="postMsg"></div>
+            </div>
+
+            <div class="form hidden" id="mcqForm">
+              <label>السؤال</label>
+              <input id="qQuestion" placeholder="اكتب السؤال..." />
+
+              <label>الخيارات (4)</label>
+              <input id="qA" placeholder="A" />
+              <input id="qB" placeholder="B" />
+              <input id="qC" placeholder="C" />
+              <input id="qD" placeholder="D" />
+
+              <label>الإجابة الصحيحة</label>
+              <select id="qCorrect">
+                <option value="0">A</option>
+                <option value="1">B</option>
+                <option value="2">C</option>
+                <option value="3">D</option>
+              </select>
+
+              <button class="btn" id="btnPublishMCQ">نشر النموذج</button>
+              <div class="small muted" id="mcqMsg"></div>
+            </div>
+          </div>
+
+          <!-- Developer -->
+          <div id="dashDeveloper" class="hidden">
+            <h3>طلبات الحسابات (Pending)</h3>
+            <p class="small muted">أدخل كلمة مرور ثم وافق ليتم توليد كود KeFo وإنشاء حساب.</p>
+
+            <div class="form">
+              <label>كلمة مرور للحساب الجديد</label>
+              <input id="devPassword" type="password" placeholder="6 أحرف على الأقل" />
+            </div>
+
+            <div id="requestsList" class="list"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>التصويت</h2>
+          <p class="muted small">نسخة MVP: تصويت عبر UID. لاحقًا نربطه بأزرار داخل الواجهة.</p>
+
+          <div class="form">
+            <label>UID الهدف</label>
+            <input id="voteUid" placeholder="uid..." />
+
+            <label>نوع التصويت</label>
+            <select id="voteType">
+              <option value="teacher">Teacher</option>
+              <option value="student">Student</option>
+            </select>
+
+            <button class="btn" id="btnVote">+ تصويت</button>
+            <div class="small muted" id="voteMsg"></div>
+          </div>
+        </div>
+      </div>
+    </section>
 
   </main>
 
-  <!-- JS -->
-  <script type="module">
-    // تأكيد تحميل HTML
-    console.log("index.html loaded");
-
-    // في حال فشل تحميل app.js
-    setTimeout(() => {
-      if (!window.__APP_LOADED__) {
-        document.getElementById("bootCheck").innerHTML =
-          "⚠️ تم تحميل الصفحة، لكن app.js لم يعمل بعد.<br>راجع مسار الملف أو أخطاء JavaScript.";
-      }
-    }, 3000);
-  </script>
+  <footer class="footer">
+    <span>school.sy ©</span>
+    <span class="dot">•</span>
+    <span>تطوير: Zakaria KeFo</span>
+  </footer>
 
   <script type="module" src="./app.js"></script>
-
 </body>
 </html>
