@@ -2,480 +2,431 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0ea5e9" />
   <title>school.sy</title>
 
   <style>
     :root{
-      --bg:#f6f8ff; --ink:#0f172a; --muted:#64748b;
-      --card:#ffffff; --line:rgba(15,23,42,.10);
-      --shadow:0 10px 26px rgba(2,6,23,.10);
-      --r:18px; --primary:#2563eb; --primary2:#06b6d4;
-      --danger:#b91c1c; --ok:#16a34a;
+      --bg:#f6f9ff; --card:#fff; --text:#0b1220; --muted:#6b7280;
+      --primary:#0ea5e9; --primary2:#2563eb; --danger:#ef4444;
+      --ring: rgba(14,165,233,.25);
+      --shadow: 0 18px 50px rgba(15,23,42,.12);
+      --radius: 22px;
     }
-    *{ box-sizing:border-box; }
-    body{
-      margin:0;
-      font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,"Noto Kufi Arabic","Noto Sans Arabic",sans-serif;
-      background:
-        radial-gradient(900px 500px at 15% 0%, rgba(37,99,235,.16), transparent 60%),
-        radial-gradient(800px 450px at 85% 5%, rgba(6,182,212,.14), transparent 55%),
-        linear-gradient(180deg,#eef7ff,var(--bg));
-      color:var(--ink);
-    }
-    .hidden{ display:none !important; }
-    .container{ max-width:1180px; margin:0 auto; padding:14px 14px 40px; }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial; background:linear-gradient(180deg,#eef6ff, #f8fbff 40%, #f6f9ff); color:var(--text)}
+    a{color:inherit}
+    .hidden{display:none!important}
 
-    /* HERO */
-    .hero{
-      position:relative; border-radius:22px; overflow:hidden;
-      border:1px solid rgba(255,255,255,.25); box-shadow:var(--shadow);
-      min-height:220px;
-      background:
-        linear-gradient(135deg, rgba(37,99,235,.90), rgba(6,182,212,.80)),
-        url("https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1600&q=60");
-      background-size:cover; background-position:center; isolation:isolate;
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      background:rgba(255,255,255,.85); backdrop-filter: blur(10px);
+      border-bottom:1px solid rgba(15,23,42,.06);
     }
-    .hero::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(2,6,23,.05), rgba(2,6,23,.55)); z-index:0;}
-    .heroInner{ position:relative; z-index:1; padding:20px 18px; display:flex; gap:14px; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; color:#fff; }
-    .brand{ display:flex; gap:12px; align-items:center; }
-    .logo{
-      width:52px;height:52px;border-radius:16px; display:grid;place-items:center;
-      background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.25);
-      backdrop-filter:blur(10px); font-weight:1000; font-size:22px;
+    .topbar .wrap{
+      max-width:1100px; margin:0 auto; padding:12px 16px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
     }
-    .heroTitle{ font-weight:1000; font-size:clamp(22px,3vw,34px); margin:0; line-height:1.15; }
-    .heroSub{ margin-top:6px; opacity:.92; max-width:720px; line-height:1.6; }
-    .heroBadges{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
-    .chip{
-      padding:9px 12px; border-radius:999px;
-      background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.25);
-      backdrop-filter:blur(10px); font-weight:900; font-size:13px; white-space:nowrap;
-    }
-
-    /* Sections */
-    .section{ margin-top:18px; }
-    .sectionHead{ display:flex; align-items:flex-end; justify-content:space-between; gap:12px; flex-wrap:wrap; margin:18px 2px 10px; }
-    .sectionHead h2{ margin:0; font-size:18px; font-weight:1000; }
-    .hint{ color:var(--muted); font-size:13px; font-weight:800; }
-
-    /* Top3 cards */
-    .top3{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
-    .topCard{
-      background:rgba(255,255,255,.78); border:1px solid var(--line); border-radius:var(--r);
-      box-shadow:0 8px 20px rgba(2,6,23,.08); padding:12px;
-      display:flex; gap:12px; align-items:center; min-height:88px;
-      cursor:pointer;
-    }
-    .avatar{
-      width:58px;height:58px;border-radius:50%; overflow:hidden;
-      border:3px solid rgba(37,99,235,.18); background:#e2e8f0;
-      flex:0 0 auto; display:grid; place-items:center;
-      font-weight:1000; color:#0f172a;
-    }
-    .avatar img{ width:100%;height:100%;object-fit:cover; display:block; }
-    .topMeta{ min-width:0; }
-    .topName{ font-weight:1000; margin:0; font-size:15px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:240px; }
-    .topVotes{ margin-top:4px; font-size:13px; color:var(--muted); font-weight:900; }
-    .rank{
-      margin-inline-start:auto; font-weight:1000; color:#fff;
+    .brand{display:flex; align-items:center; gap:10px; font-weight:900}
+    .brand .logo{
+      width:40px;height:40px;border-radius:14px;
       background:linear-gradient(135deg,var(--primary),var(--primary2));
-      border-radius:12px; padding:6px 10px; font-size:13px;
-      box-shadow:0 10px 18px rgba(37,99,235,.18);
+      display:grid;place-items:center;color:#fff;
+      box-shadow:0 14px 30px rgba(37,99,235,.22);
+      user-select:none;
     }
-
-    /* Filters */
-    .filters{
-      background:rgba(255,255,255,.78); border:1px solid var(--line); border-radius:var(--r);
-      box-shadow:0 8px 18px rgba(2,6,23,.06);
-      padding:12px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;
-    }
-    .filters input, .filters select{
-      border-radius:14px; border:1px solid rgba(15,23,42,.12);
-      background:rgba(255,255,255,.85);
-      padding:10px 12px; outline:none; min-width:220px; font-weight:800;
-    }
-    .filters input:focus, .filters select:focus{
-      border-color:rgba(37,99,235,.35);
-      box-shadow:0 0 0 5px rgba(37,99,235,.12);
-    }
-    .count{ margin-inline-start:auto; color:var(--muted); font-size:13px; font-weight:1000; }
-
-    /* Schools grid */
-    .grid{ margin-top:12px; display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
-    .card{
-      background:rgba(255,255,255,.78); border:1px solid var(--line); border-radius:var(--r);
-      box-shadow:0 10px 24px rgba(2,6,23,.08); overflow:hidden;
-      display:flex; flex-direction:column; min-height:320px;
-      transition:transform .15s ease, box-shadow .15s ease;
-    }
-    .card:hover{ transform:translateY(-2px); box-shadow:0 18px 34px rgba(2,6,23,.12); }
-    .cover{ height:140px; background:linear-gradient(135deg, rgba(37,99,235,.20), rgba(6,182,212,.18)); position:relative; overflow:hidden; }
-    .cover img{ width:100%; height:100%; object-fit:cover; display:block; }
-    .cardBody{ padding:12px; display:flex; flex-direction:column; gap:8px; flex:1; }
-    .schoolName{ margin:0; font-weight:1000; font-size:16px; line-height:1.25; }
-    .schoolAddr{ color:var(--muted); font-size:13px; font-weight:800; line-height:1.6; min-height:42px; }
-    .cardActions{ display:flex; gap:10px; margin-top:auto; padding-top:8px; flex-wrap:wrap; }
+    .nav{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
     .btn{
-      cursor:pointer; border:1px solid transparent; border-radius:14px;
-      padding:10px 12px; font-weight:1000; font-size:13px;
-      background:linear-gradient(135deg,var(--primary),var(--primary2));
-      color:#fff; text-decoration:none; display:inline-flex; align-items:center; justify-content:center; gap:8px;
-      box-shadow:0 10px 18px rgba(37,99,235,.14); flex:1 1 auto;
-    }
-    .btn.ghost{
-      background:rgba(15,23,42,.04); color:var(--ink);
-      border-color:rgba(15,23,42,.10); box-shadow:none;
-    }
-
-    /* School view */
-    .toolbar{
-      display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between;
-      margin-top: 14px;
-    }
-    .crumb{
-      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
-      color: var(--muted); font-weight: 900;
-    }
-    .crumb a{ color: var(--primary); text-decoration:none; font-weight:1000; }
-    .schoolHero{
-      margin-top: 10px;
-      border-radius: 22px;
-      overflow:hidden;
-      border: 1px solid rgba(255,255,255,.25);
-      box-shadow: var(--shadow);
-      background: #fff;
-    }
-    .schoolHeroCover{
-      height: 210px;
-      background: linear-gradient(135deg, rgba(37,99,235,.26), rgba(6,182,212,.20));
-      position: relative;
-      overflow:hidden;
-    }
-    .schoolHeroCover img{ width:100%; height:100%; object-fit:cover; display:block; }
-    .schoolHeroBody{
-      padding: 14px;
-      display:flex;
-      gap: 14px;
-      align-items: flex-start;
-      flex-wrap: wrap;
-    }
-    .schoolLogo{
-      width: 76px; height: 76px; border-radius: 22px;
-      background: rgba(37,99,235,.10);
-      border: 1px solid rgba(15,23,42,.10);
-      display:grid; place-items:center;
-      font-weight:1000;
-      overflow:hidden;
-      flex: 0 0 auto;
-    }
-    .schoolLogo img{ width:100%; height:100%; object-fit:cover; display:block; }
-    .schoolMeta{ min-width:0; flex: 1 1 auto; }
-    .schoolMeta h2{ margin:0; font-weight:1000; }
-    .schoolMeta .sub{ margin-top:6px; color: var(--muted); font-weight:800; line-height:1.6; }
-    .schoolMeta .addr{ margin-top:6px; color: var(--muted); font-weight:900; }
-
-    /* Teacher/Students top in school page */
-    .twocol{
-      margin-top: 12px;
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-    .panel{
-      background:rgba(255,255,255,.78); border:1px solid var(--line); border-radius:var(--r);
-      box-shadow:0 10px 22px rgba(2,6,23,.08);
-      padding: 12px;
-    }
-    .panel h3{ margin:0 0 10px 0; font-weight:1000; font-size:16px; }
-    .rankRow{
-      display:flex; align-items:center; gap:10px;
+      appearance:none;border:0; cursor:pointer;
+      padding:10px 14px; border-radius:14px;
+      background:#fff; color:var(--text);
       border:1px solid rgba(15,23,42,.08);
-      background: rgba(255,255,255,.8);
-      border-radius: 16px;
-      padding: 10px;
-      margin-top: 8px;
+      box-shadow: 0 10px 24px rgba(15,23,42,.08);
+      font-weight:800;
+      transition:.2s transform,.2s box-shadow,.2s border-color;
     }
-    .rankRow .mini{
-      width:44px;height:44px;border-radius:50%;
-      display:grid;place-items:center; font-weight:1000;
-      background: rgba(37,99,235,.10);
-      border: 1px solid rgba(37,99,235,.18);
-      overflow:hidden;
-      flex: 0 0 auto;
-    }
-    .rankRow .mini img{ width:100%;height:100%;object-fit:cover; display:block; }
-    .rankRow .name{ font-weight:1000; }
-    .rankRow .votes{ color: var(--muted); font-weight:900; font-size:13px; }
-    .rankRow .num{
-      margin-inline-start:auto;
-      font-weight:1000;
-      background: linear-gradient(135deg, var(--primary), var(--primary2));
-      color:#fff;
-      border-radius: 12px;
-      padding: 6px 10px;
-      font-size: 13px;
+    .btn:hover{transform:translateY(-1px); border-color:rgba(14,165,233,.35); box-shadow:0 16px 36px rgba(15,23,42,.12)}
+    .btn.primary{background:linear-gradient(135deg,var(--primary),var(--primary2)); color:#fff; border-color:transparent}
+    .btn.ghost{background:transparent; box-shadow:none}
+    .pill{
+      font-weight:900; padding:8px 12px; border-radius:999px;
+      background:rgba(14,165,233,.12); color:#035b86;
+      border:1px solid rgba(14,165,233,.18);
     }
 
-    /* Posts */
-    .posts{ margin-top: 12px; }
-    .post{
-      background: rgba(255,255,255,.78);
-      border: 1px solid var(--line);
-      border-radius: var(--r);
-      box-shadow: 0 10px 22px rgba(2,6,23,.07);
-      padding: 12px;
-      margin-top: 10px;
-    }
-    .postHead{ display:flex; gap:10px; align-items:center; }
-    .postHead .mini{ width:42px;height:42px;border-radius:50%; overflow:hidden; display:grid;place-items:center; font-weight:1000; background:#e2e8f0; }
-    .postHead .mini img{ width:100%;height:100%;object-fit:cover; display:block; }
-    .postTitle{ margin:0; font-weight:1000; }
-    .postMeta{ margin-top:2px; color: var(--muted); font-weight:900; font-size:13px; }
-    .postBody{ margin-top: 10px; line-height:1.7; font-weight: 800; color: #0b1220; }
-    .bullets{ margin:8px 0 0; padding:0 18px; color:#0b1220; font-weight:800; }
-
-    /* Modal */
-    .backdrop{
-      position:fixed; inset:0; background: rgba(2,6,23,.55);
-      display:none; align-items:center; justify-content:center;
-      padding: 16px; z-index: 9999;
-    }
-    .backdrop.show{ display:flex; }
-    .modal{
-      width: min(560px, 100%);
-      background: rgba(255,255,255,.95);
-      border: 1px solid rgba(255,255,255,.25);
-      border-radius: 22px;
-      box-shadow: 0 20px 55px rgba(2,6,23,.25);
+    main{max-width:1100px;margin:0 auto;padding:20px 16px 60px}
+    .hero{
+      border-radius:var(--radius);
+      background:
+        linear-gradient(90deg, rgba(2,132,199,.86), rgba(37,99,235,.72)),
+        url("https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=1400&q=70");
+      background-size:cover; background-position:center;
+      color:#fff; box-shadow:var(--shadow);
       overflow:hidden;
     }
-    .modalHead{
-      padding: 12px 14px;
-      display:flex; align-items:center; justify-content:space-between;
-      border-bottom: 1px solid rgba(15,23,42,.10);
+    .hero .inner{padding:26px 22px; display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap}
+    .hero h1{margin:0;font-size:34px; letter-spacing:.2px}
+    .hero p{margin:8px 0 0; opacity:.95; font-weight:600}
+    .hero .chips{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    .hero .chip{
+      background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.22);
+      padding:8px 12px; border-radius:999px; font-weight:800;
     }
-    .modalHead h4{ margin:0; font-weight:1000; }
-    .modalBody{ padding: 12px 14px; }
-    .row{ display:flex; gap:10px; flex-wrap:wrap; }
-    .field{ display:flex; flex-direction:column; gap:6px; margin-top: 10px; flex: 1 1 200px; }
-    .field label{ color: var(--muted); font-weight: 1000; font-size: 13px; }
-    .field input, .field select, .field textarea{
-      border-radius: 14px;
-      border: 1px solid rgba(15,23,42,.12);
-      background: rgba(255,255,255,.92);
-      padding: 10px 12px;
-      outline: none;
-      font-weight: 900;
-      width: 100%;
+
+    .grid{display:grid; gap:14px}
+    @media(min-width:900px){ .grid.cols2{grid-template-columns: 1.2fr .8fr} }
+    .card{
+      background:var(--card); border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      border:1px solid rgba(15,23,42,.06);
+      overflow:hidden;
     }
-    textarea{ min-height: 90px; resize: vertical; }
-    .modalFoot{
-      padding: 12px 14px;
-      border-top: 1px solid rgba(15,23,42,.10);
-      display:flex; gap: 10px; justify-content:flex-end; flex-wrap:wrap;
+    .card .hd{padding:16px 16px 0}
+    .card .hd h2{margin:0 0 6px; font-size:18px}
+    .card .bd{padding:16px}
+    .muted{color:var(--muted)}
+    .small{font-size:13px}
+
+    .filters{display:flex; gap:10px; flex-wrap:wrap}
+    .input, select{
+      width:100%; max-width: 360px;
+      padding:12px 14px; border-radius:14px;
+      border:1px solid rgba(15,23,42,.10);
+      outline:none;
+      background:#fff;
+      box-shadow: 0 10px 22px rgba(15,23,42,.06);
     }
-    .msg{ margin-top: 10px; font-weight: 1000; }
-    .msg.ok{ color: var(--ok); }
-    .msg.err{ color: var(--danger); }
+    .input:focus, select:focus{border-color:rgba(14,165,233,.5); box-shadow:0 0 0 6px var(--ring)}
+    .schools{display:grid; gap:12px}
+    @media(min-width:760px){ .schools{grid-template-columns: repeat(2,minmax(0,1fr));} }
+    @media(min-width:1050px){ .schools{grid-template-columns: repeat(3,minmax(0,1fr));} }
+
+    .schoolCard{padding:14px; display:flex; flex-direction:column; gap:10px}
+    .schoolCard .row{display:flex; align-items:center; gap:12px}
+    .avatar{
+      width:54px; height:54px; border-radius:18px;
+      background:linear-gradient(135deg, rgba(14,165,233,.18), rgba(37,99,235,.12));
+      border:1px solid rgba(14,165,233,.25);
+      display:grid; place-items:center;
+      font-weight:900; color:#075985;
+      overflow:hidden;
+      user-select:none;
+    }
+    .avatar img{width:100%; height:100%; object-fit:cover}
+    .schoolCard h3{margin:0; font-size:16px}
+    .schoolCard .actions{display:flex; gap:10px; flex-wrap:wrap}
+    .tag{display:inline-flex; align-items:center; gap:8px; font-weight:800;
+      padding:8px 10px; border-radius:999px; border:1px solid rgba(15,23,42,.08);
+      background:rgba(2,132,199,.06);
+    }
+
+    .top3{display:grid; gap:12px}
+    @media(min-width:760px){ .top3{grid-template-columns:repeat(3,minmax(0,1fr))} }
+    .rankCard{padding:14px; display:flex; gap:12px; align-items:center; position:relative}
+    .rankCard .badge{
+      position:absolute; top:12px; left:12px;
+      background:linear-gradient(135deg,var(--primary),var(--primary2));
+      color:#fff; font-weight:900;
+      padding:8px 12px; border-radius:999px;
+      box-shadow:0 12px 26px rgba(37,99,235,.22);
+    }
+    .rankMeta{min-width:0}
+    .rankName{font-weight:900; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+    .rankCount{color:var(--muted); font-size:13px; font-weight:700}
+
+    .posts{display:grid; gap:12px}
+    .post{padding:14px}
+    .postHeader{display:flex; gap:10px; align-items:center}
+    .postTitle{margin:0; font-size:16px}
+    .postType{color:var(--muted); font-weight:800; font-size:12px}
+    .bullets{margin:8px 0 0; padding:0 18px; color:#111827; font-weight:700}
 
     .footer{
-      margin-top: 22px;
-      padding: 16px 0 6px;
-      color: var(--muted);
-      font-weight: 900;
-      font-size: 13px;
-      display:flex;
-      gap:10px;
-      justify-content:center;
-      flex-wrap: wrap;
+      margin-top:22px; padding:14px 0; text-align:center; color:var(--muted); font-weight:700;
     }
 
-    @media (max-width: 980px){
-      .top3{ grid-template-columns: 1fr; }
-      .grid{ grid-template-columns: repeat(2, 1fr); }
-      .twocol{ grid-template-columns: 1fr; }
+    .modalOverlay{
+      position:fixed; inset:0; background:rgba(2,6,23,.55);
+      backdrop-filter: blur(6px);
+      display:flex; align-items:center; justify-content:center;
+      padding:18px; z-index:1000;
     }
-    @media (max-width: 640px){
-      .grid{ grid-template-columns: 1fr; }
-      .filters input, .filters select{ min-width: 100%; }
-      .count{ width:100%; margin-inline-start:0; }
+    .modal{
+      width:min(560px,100%);
+      background:#fff; border-radius:26px; box-shadow:0 30px 80px rgba(0,0,0,.25);
+      border:1px solid rgba(15,23,42,.12);
+      overflow:hidden;
     }
+    .modal .mh{padding:16px 18px; border-bottom:1px solid rgba(15,23,42,.08); display:flex; align-items:center; justify-content:space-between}
+    .modal .mh h3{margin:0; font-size:16px}
+    .modal .mb{padding:16px 18px}
+    .row2{display:grid; gap:10px}
+    @media(min-width:720px){ .row2{grid-template-columns: 1fr 1fr} }
+    .msg{margin-top:10px; font-weight:900}
+    .msg.ok{color:#0f766e}
+    .msg.err{color:#b91c1c}
   </style>
 </head>
 
 <body>
-  <div class="container">
+  <div class="topbar">
+    <div class="wrap">
+      <div class="brand">
+        <div class="logo">S</div>
+        <div>
+          <div style="font-size:18px">school.sy</div>
+          <div class="small muted" id="routeHint">دليل المدارس + صفحات مدارس تفاعلية</div>
+        </div>
+      </div>
 
-    <!-- ============ HOME VIEW ============ -->
-    <div id="viewHome">
-      <section class="hero">
-        <div class="heroInner">
-          <div class="brand">
-            <div class="logo">S</div>
-            <div>
-              <h1 class="heroTitle">school.sy</h1>
-              <div class="heroSub">دليل المدارس + صفحات مدارس تفاعلية (أفضل المعلمين/الطلاب + منشورات + اختبارات).</div>
+      <div class="nav">
+        <button class="btn ghost" id="btnHome">دليل المدارس</button>
+        <span class="pill" id="userPill">زائر</span>
+        <button class="btn" id="btnLoginOpen">تسجيل الدخول</button>
+        <button class="btn" id="btnLogout">تسجيل خروج</button>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- HOME -->
+    <section id="viewHome">
+      <div class="hero">
+        <div class="inner">
+          <div>
+            <h1>school.sy</h1>
+            <p>دليل المدارس في سوريا + صفحات مدارس تفاعلية (تصويت + منشورات + اختبارات)</p>
+            <div class="chips" style="margin-top:12px">
+              <div class="chip">بحث سريع</div>
+              <div class="chip">صفحات مدارس</div>
+              <div class="chip">تصويت للطلاب</div>
+              <div class="chip">منشورات تعليمية</div>
             </div>
           </div>
-          <div class="heroBadges">
-            <div class="chip">📍 بحث حسب المدينة</div>
-            <div class="chip">🏆 توب 3 مدارس</div>
-            <div class="chip">🗺️ خرائط Google</div>
+          <div style="text-align:left">
+            <div class="small" style="opacity:.95;font-weight:800">ملاحظة:</div>
+            <div class="small" style="opacity:.9;max-width:320px">
+              التصويت متاح فقط لحساب الطالب بعد موافقة إدارة المدرسة.
+            </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      <section class="section">
-        <div class="sectionHead">
-          <h2>🏆 أفضل المدارس (Top 3)</h2>
-          <div class="hint">حسب votesCount داخل وثيقة المدرسة (مؤقتًا)</div>
+      <div class="grid cols2" style="margin-top:14px">
+        <div class="card">
+          <div class="hd">
+            <h2>🏆 أفضل المدارس (Top 3)</h2>
+            <div class="muted small">حسب عدّاد التصويت داخل المدارس (votesCount)</div>
+          </div>
+          <div class="bd">
+            <div class="top3" id="topSchools"></div>
+            <div class="small muted" id="topSchoolsHint" style="margin-top:10px"></div>
+          </div>
         </div>
-        <div class="top3" id="top3"></div>
-      </section>
 
-      <section class="section">
-        <div class="sectionHead">
+        <div class="card">
+          <div class="hd">
+            <h2>🔎 البحث والتصفية</h2>
+            <div class="muted small">ابحث بالاسم واختر المدينة لعرض مدارسها</div>
+          </div>
+          <div class="bd">
+            <div class="filters">
+              <input class="input" id="qName" placeholder="ابحث باسم المدرسة..." />
+              <select id="qCity">
+                <option value="">كل المدن</option>
+              </select>
+            </div>
+            <div class="small muted" style="margin-top:10px">
+              لاحقًا يمكننا إضافة “الأقرب” عند إدخال lat/lng داخل المدارس.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <div class="hd">
           <h2>🏫 مدارس سوريا</h2>
-          <div class="hint">ابحث بالاسم أو اختر المدينة</div>
+          <div class="muted small">بطاقات مدارس + فتح صفحة المدرسة + خرائط جوجل</div>
         </div>
-
-        <div class="filters">
-          <input id="searchBox" placeholder="ابحث باسم المدرسة..." />
-          <select id="citySelect">
-            <option value="">كل المدن</option>
-          </select>
-          <div class="count" id="countLabel">تحميل...</div>
-        </div>
-
-        <div class="grid" id="schoolsGrid"></div>
-      </section>
-
-      <div class="footer">
-        <span>school.sy ©</span><span>•</span><span>تطوير: Zakaria KeFo</span>
-      </div>
-    </div>
-
-    <!-- ============ SCHOOL VIEW (SPA) ============ -->
-    <div id="viewSchool" class="hidden">
-      <div class="toolbar">
-        <div class="crumb">
-          <a href="#/">⬅ العودة للرئيسية</a>
-          <span>•</span>
-          <span id="crumbSchool">—</span>
-        </div>
-
-        <div class="row">
-          <a id="btnMaps" class="btn ghost" href="#" target="_blank" rel="noopener">🗺️ خرائط Google</a>
-          <button id="btnRequestAccount" class="btn">طلب حساب (طالب/ولي أمر)</button>
+        <div class="bd">
+          <div class="schools" id="schoolsList"></div>
+          <div class="small muted" id="schoolsHint" style="margin-top:10px"></div>
         </div>
       </div>
 
-      <section class="schoolHero">
-        <div class="schoolHeroCover" id="schoolCover"></div>
-        <div class="schoolHeroBody">
-          <div class="schoolLogo" id="schoolLogo">S</div>
-          <div class="schoolMeta">
-            <h2 id="schoolName">—</h2>
-            <div class="sub" id="schoolDesc">—</div>
-            <div class="addr" id="schoolAddr">—</div>
+      <div class="footer">© school.sy • تطوير: Zakaria KeFo</div>
+    </section>
+
+    <!-- SCHOOL -->
+    <section id="viewSchool" class="hidden">
+      <div class="hero" id="schoolHero">
+        <div class="inner">
+          <div>
+            <h1 id="schoolTitle">اسم المدرسة</h1>
+            <p id="schoolSubtitle">المدينة • العنوان</p>
+            <div class="chips" style="margin-top:12px">
+              <div class="chip" id="chipCity">—</div>
+              <div class="chip" id="chipVotes">0 تصويت</div>
+              <div class="chip" id="chipMap">📍 خرائط</div>
+            </div>
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end">
+            <button class="btn primary" id="btnRequestStudentParent">طلب حساب (طالب/ولي أمر)</button>
+            <button class="btn" id="btnBack">⬅️ رجوع للدليل</button>
           </div>
         </div>
-      </section>
+      </div>
 
-      <section class="section">
-        <div class="sectionHead">
-          <h2>⭐ الأفضل في هذه المدرسة</h2>
-          <div class="hint">تحديث تلقائي حسب leaderboards/{schoolId}</div>
-        </div>
-
-        <div class="twocol">
-          <div class="panel">
-            <h3>🏅 أفضل المعلمين (Top 3)</h3>
-            <div id="topTeachers"></div>
+      <div class="grid cols2" style="margin-top:14px">
+        <div class="card">
+          <div class="hd">
+            <h2>👨‍🏫 أفضل المعلمين (Top 3)</h2>
+            <div class="muted small">من leaderboards/{schoolId}.teachersTop</div>
           </div>
-          <div class="panel">
-            <h3>🏅 أفضل الطلاب (Top 3)</h3>
-            <div id="topStudents"></div>
+          <div class="bd">
+            <div class="top3" id="teachersTop"></div>
+            <div class="small muted" id="teachersHint" style="margin-top:10px"></div>
           </div>
         </div>
-      </section>
 
-      <section class="section posts">
-        <div class="sectionHead">
+        <div class="card">
+          <div class="hd">
+            <h2>🎓 أفضل الطلاب (Top 3)</h2>
+            <div class="muted small">من leaderboards/{schoolId}.studentsTop</div>
+          </div>
+          <div class="bd">
+            <div class="top3" id="studentsTop"></div>
+            <div class="small muted" id="studentsHint" style="margin-top:10px"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:14px">
+        <div class="hd">
           <h2>📌 منشورات المعلمين والإدارة</h2>
-          <div class="hint">من collection: posts (مع schoolId)</div>
+          <div class="muted small">من collection: posts (مع schoolId)</div>
         </div>
-        <div id="postsList"></div>
-      </section>
-
-      <div class="footer">
-        <span>school.sy ©</span><span>•</span><span>تطوير: Zakaria KeFo</span>
+        <div class="bd">
+          <div class="posts" id="postsList"></div>
+          <div class="small muted" id="postsHint" style="margin-top:10px"></div>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <!-- ===== Modal: Account request (student/parent) ===== -->
-  <div class="backdrop" id="modalBackdrop" aria-hidden="true">
+      <div class="footer">© school.sy • تطوير: Zakaria KeFo</div>
+    </section>
+  </main>
+
+  <!-- Login Modal -->
+  <div class="modalOverlay hidden" id="loginModal">
     <div class="modal" role="dialog" aria-modal="true">
-      <div class="modalHead">
-        <h4>طلب حساب</h4>
-        <button id="btnCloseModal" class="btn ghost" style="flex:0 0 auto; padding:8px 10px;">✖</button>
+      <div class="mh">
+        <h3>تسجيل الدخول (بكود KeFo)</h3>
+        <button class="btn" id="btnLoginClose">إغلاق</button>
       </div>
-      <div class="modalBody">
-        <div class="row">
-          <div class="field">
-            <label>الدور</label>
-            <select id="reqRole">
-              <option value="student">طالب</option>
-              <option value="parent">ولي أمر</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label id="labelName">اسم الطالب</label>
-            <input id="reqName" placeholder="اكتب الاسم هنا..." />
-          </div>
+      <div class="mb">
+        <div class="row2">
+          <input class="input" id="loginCode" placeholder="KeFo12345" />
+          <input class="input" id="loginPass" type="password" placeholder="كلمة المرور" />
         </div>
-
-        <div class="field">
-          <label>ملاحظة (اختياري)</label>
-          <textarea id="reqNote" placeholder="مثال: الصف/الشعبة/رقم للتواصل..."></textarea>
+        <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap">
+          <button class="btn primary" id="btnLogin">دخول</button>
+          <span class="small muted">حساب ولي الأمر للمشاهدة فقط (بدون تصويت).</span>
         </div>
-
-        <div id="reqMsg" class="msg"></div>
-      </div>
-      <div class="modalFoot">
-        <button id="btnSendRequest" class="btn">إرسال الطلب</button>
+        <div class="msg small" id="loginMsg"></div>
       </div>
     </div>
   </div>
 
-  <!-- =========================
-       Firebase + SPA Logic
-  ========================== -->
-  <script type="module">
-    /* ========= 0) Copy / right-click protection (best effort) ========= */
-    (function(){
-      document.addEventListener("contextmenu", e => e.preventDefault());
-      document.addEventListener("dragstart", e => e.preventDefault());
-      document.addEventListener("selectstart", e => e.preventDefault());
-      document.addEventListener("copy", e => { e.preventDefault(); });
-      document.addEventListener("cut", e => { e.preventDefault(); });
-      document.addEventListener("keydown", (e) => {
+  <!-- Request Account Modal -->
+  <div class="modalOverlay hidden" id="reqModal">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="mh">
+        <h3>طلب حساب (طالب / ولي أمر)</h3>
+        <button class="btn" id="btnReqClose">إغلاق</button>
+      </div>
+      <div class="mb">
+        <div class="row2">
+          <select id="reqRole">
+            <option value="student">طالب</option>
+            <option value="parent">ولي أمر</option>
+          </select>
+          <input class="input" id="reqName" placeholder="الاسم (أو: أهل الطالب: اسم الطالب)" />
+        </div>
+        <div class="row2" style="margin-top:10px">
+          <input class="input" id="reqPhone" placeholder="رقم هاتف (اختياري)" />
+          <input class="input" id="reqNote" placeholder="ملاحظة (اختياري)" />
+        </div>
+        <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap">
+          <button class="btn primary" id="btnSendRequest">إرسال الطلب</button>
+          <span class="small muted">سيظهر الطلب في لوحة إدارة المدرسة للموافقة.</span>
+        </div>
+        <div class="msg small" id="reqMsg"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- حماية بسيطة -->
+  <script>
+    (function harden(){
+      document.addEventListener("contextmenu", (e)=> e.preventDefault());
+      document.addEventListener("copy", (e)=> { e.preventDefault(); });
+      document.addEventListener("cut", (e)=> { e.preventDefault(); });
+      document.addEventListener("dragstart", (e)=> e.preventDefault());
+      document.addEventListener("selectstart", (e)=> e.preventDefault());
+      document.addEventListener("keydown", (e)=>{
         const k = (e.key||"").toLowerCase();
-        // منع أكثر الاختصارات شيوعًا
-        if ((e.ctrlKey || e.metaKey) && ["c","x","u","s","p","a"].includes(k)) e.preventDefault();
-        if (e.key === "PrintScreen") e.preventDefault();
+        if ((e.ctrlKey || e.metaKey) && (k==="c" || k==="u" || k==="s" || k==="p" || k==="a")) e.preventDefault();
+        if (e.key === "F12") e.preventDefault();
       });
-
-      // منع الضغط المطوّل على الموبايل قدر الإمكان
-      let t = null;
-      document.addEventListener("touchstart", () => { t = setTimeout(()=>{}, 500); }, {passive:true});
-      document.addEventListener("touchend", () => { if(t) clearTimeout(t); t=null; }, {passive:true});
     })();
+  </script>
 
-    /* ========= 1) Firebase config ========= */
+  <script type="module">
+    const $ = (id) => document.getElementById(id);
+    const show = (el) => el && el.classList.remove("hidden");
+    const hide = (el) => el && el.classList.add("hidden");
+
+    const views = { home: $("viewHome"), school: $("viewSchool") };
+    function showView(name){
+      Object.values(views).forEach(hide);
+      show(views[name]);
+    }
+
+    function esc(s){
+      return String(s ?? "").replace(/[&<>"']/g, c => ({
+        "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+      }[c]));
+    }
+    function slugify(ar){
+      return encodeURIComponent(String(ar||"").trim().replace(/\s+/g,"-"));
+    }
+    function banner(msg, kind="err"){
+      const box = document.createElement("div");
+      box.style.cssText = `
+        position:fixed;left:10px;right:10px;bottom:10px;z-index:99999;
+        background:${kind==="ok" ? "#064e3b" : "#7f1d1d"};
+        color:#fff;border:1px solid rgba(255,255,255,.15);
+        border-radius:14px;padding:12px;font-family:system-ui;line-height:1.6;
+        box-shadow:0 12px 30px rgba(0,0,0,.35); direction:rtl;
+      `;
+      box.innerHTML = msg;
+      document.body.appendChild(box);
+      setTimeout(()=> box.remove(), 4200);
+    }
+
+    /* Firebase */
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import {
+      getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut
+    } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+    import {
+      getFirestore,
+      doc, getDoc,
+      addDoc, collection, serverTimestamp,
+      query, where, orderBy, limit, onSnapshot
+    } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
     const firebaseConfig = {
       apiKey: "AIzaSyCexRHqxd8Xm_EBWMEnLj_2WAjxJcgXf9g",
       authDomain: "school-sy.firebaseapp.com",
@@ -485,444 +436,406 @@
       appId: "1:121186119852:web:f96d12deade6cebbda6f09"
     };
 
-    /* ========= 2) Firebase imports (CDN) ========= */
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import {
-      getFirestore,
-      collection,
-      doc,
-      getDoc,
-      addDoc,
-      onSnapshot,
-      query,
-      where,
-      orderBy,
-      limit,
-      serverTimestamp
-    } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+    const app  = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db   = getFirestore(app);
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    /* Login UI */
+    const loginModal = $("loginModal");
+    $("btnLoginOpen").onclick = ()=> show(loginModal);
+    $("btnLoginClose").onclick = ()=> hide(loginModal);
+    $("btnLogout").onclick = async ()=> { try{ await signOut(auth); }catch{} };
 
-    /* ========= 3) DOM helpers ========= */
-    const $ = (id) => document.getElementById(id);
-    const esc = (s) => String(s||"").replace(/[&<>"']/g, c => ({
-      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-    }[c]));
-    const slugify = (s) => (s||"")
-      .toString().trim().toLowerCase()
-      .replace(/\s+/g,"-")
-      .replace(/[^\w\u0600-\u06FF-]+/g,"")
-      .replace(/-+/g,"-")
-      .slice(0,60);
+    $("btnLogin").onclick = async ()=>{
+      $("loginMsg").className = "msg small";
+      $("loginMsg").textContent = "";
+      const code = $("loginCode").value.trim();
+      const pass = $("loginPass").value;
 
-    /* ========= 4) Views ========= */
-    const viewHome = $("viewHome");
-    const viewSchool = $("viewSchool");
-    const top3El = $("top3");
-    const gridEl = $("schoolsGrid");
-    const searchBox = $("searchBox");
-    const citySelect = $("citySelect");
-    const countLabel = $("countLabel");
+      if (!code.startsWith("KeFo")){
+        $("loginMsg").className = "msg small err";
+        $("loginMsg").textContent = "أدخل كود يبدأ بـ KeFo";
+        return;
+      }
+      if (!pass || pass.length < 6){
+        $("loginMsg").className = "msg small err";
+        $("loginMsg").textContent = "كلمة المرور قصيرة";
+        return;
+      }
 
-    // School view elements
-    const crumbSchool = $("crumbSchool");
-    const schoolCover = $("schoolCover");
-    const schoolLogo = $("schoolLogo");
-    const schoolName = $("schoolName");
-    const schoolDesc = $("schoolDesc");
-    const schoolAddr = $("schoolAddr");
-    const btnMaps = $("btnMaps");
-    const topTeachers = $("topTeachers");
-    const topStudents = $("topStudents");
-    const postsList = $("postsList");
+      const email = `${code}@school.local`;
+      try{
+        await signInWithEmailAndPassword(auth, email, pass);
+        $("loginMsg").className = "msg small ok";
+        $("loginMsg").textContent = "✅ تم تسجيل الدخول";
+        hide(loginModal);
+      }catch(e){
+        $("loginMsg").className = "msg small err";
+        $("loginMsg").textContent = "فشل الدخول: " + (e?.message || e);
+      }
+    };
 
-    /* ========= 5) State ========= */
-    let allSchools = [];
-    let topSchools = [];
-    let unsubSchool = null;
-    let unsubBoards = null;
-    let unsubPosts = null;
+    /* Request UI */
+    const reqModal = $("reqModal");
+    $("btnReqClose").onclick = ()=> hide(reqModal);
+
     let currentSchoolId = null;
-    let currentSchool = null;
-
-    function showHome(){
-      viewHome.classList.remove("hidden");
-      viewSchool.classList.add("hidden");
-      document.title = "school.sy";
-      cleanupSchoolListeners();
-    }
-
-    function showSchool(){
-      viewHome.classList.add("hidden");
-      viewSchool.classList.remove("hidden");
-    }
-
-    function cleanupSchoolListeners(){
-      if (typeof unsubSchool === "function") unsubSchool();
-      if (typeof unsubBoards === "function") unsubBoards();
-      if (typeof unsubPosts === "function") unsubPosts();
-      unsubSchool = unsubBoards = unsubPosts = null;
-      currentSchoolId = null;
-      currentSchool = null;
-    }
-
-    /* ========= 6) Home render ========= */
-    function mapsLink(s){
-      if (s.mapsUrl) return s.mapsUrl;
-      const q = encodeURIComponent(`${s.name||""} ${s.city||""} ${s.address||""}`.trim());
-      return `https://www.google.com/maps/search/?api=1&query=${q}`;
-    }
-
-    function schoolHash(s){
-      const slug = slugify(s.name);
-      return `#/school/${encodeURIComponent(s.id)}-${encodeURIComponent(slug)}`;
-    }
-
-    function renderTop3(){
-      top3El.innerHTML = "";
-      const arr = topSchools.slice(0, 3);
-
-      for (let i=0;i<3;i++){
-        const s = arr[i] || { name:"—", votesCount:0, logoURL:"" };
-        const el = document.createElement("div");
-        el.className = "topCard";
-        el.innerHTML = `
-          <div class="avatar">
-            ${s.logoURL ? `<img src="${esc(s.logoURL)}" alt="">` : (esc(s.name)[0] || "؟")}
-          </div>
-          <div class="topMeta">
-            <p class="topName">${esc(s.name || "—")}</p>
-            <div class="topVotes">التصويت: ${Number(s.votesCount || 0)}</div>
-          </div>
-          <div class="rank">#${i+1}</div>
-        `;
-        el.addEventListener("click", () => { location.hash = schoolHash(s); });
-        top3El.appendChild(el);
-      }
-    }
-
-    function fillCities(){
-      const cities = Array.from(new Set(allSchools.map(s => (s.city || "").trim()).filter(Boolean)))
-        .sort((a,b)=>a.localeCompare(b,'ar'));
-      const current = citySelect.value;
-      citySelect.innerHTML = `<option value="">كل المدن</option>` + cities.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join("");
-      citySelect.value = current;
-    }
-
-    function renderSchools(list){
-      gridEl.innerHTML = "";
-      if (!list.length){
-        gridEl.innerHTML = `<div style="grid-column:1/-1;color:#64748b;font-weight:1000;padding:10px">لا توجد نتائج مطابقة.</div>`;
-        return;
-      }
-
-      for (const s of list){
-        const el = document.createElement("div");
-        el.className = "card";
-        el.innerHTML = `
-          <div class="cover">
-            ${s.coverURL ? `<img src="${esc(s.coverURL)}" alt="">` : ``}
-          </div>
-          <div class="cardBody">
-            <h3 class="schoolName">${esc(s.name || "مدرسة")}</h3>
-            <div class="schoolAddr">
-              <div>📍 ${esc(s.city || "—")}</div>
-              <div>${esc(s.address || "")}</div>
-            </div>
-
-            <div class="cardActions">
-              <a class="btn ghost" href="${esc(mapsLink(s))}" target="_blank" rel="noopener">🗺️ خرائط Google</a>
-              <a class="btn" href="${esc(schoolHash(s))}">فتح صفحة المدرسة</a>
-            </div>
-          </div>
-        `;
-        gridEl.appendChild(el);
-      }
-    }
-
-    function applyFilters(){
-      const q = (searchBox.value || "").trim().toLowerCase();
-      const city = (citySelect.value || "").trim();
-
-      const filtered = allSchools.filter(s => {
-        const okCity = !city || (s.city || "").trim() === city;
-        const okQ = !q || (s.name || "").toLowerCase().includes(q) || (s.address || "").toLowerCase().includes(q);
-        return okCity && okQ;
-      });
-
-      renderSchools(filtered);
-      countLabel.textContent = `عدد المدارس: ${filtered.length}`;
-    }
-
-    searchBox.addEventListener("input", applyFilters);
-    citySelect.addEventListener("change", applyFilters);
-
-    /* ========= 7) School view render ========= */
-    function renderRank(container, arr){
-      container.innerHTML = "";
-      const safe = Array.isArray(arr) ? arr : [];
-      for(let i=0;i<3;i++){
-        const it = safe[i] || { displayName:"—", count:0, photoURL:"" };
-        const row = document.createElement("div");
-        row.className = "rankRow";
-        row.innerHTML = `
-          <div class="mini">${it.photoURL ? `<img src="${esc(it.photoURL)}" alt="">` : (esc(it.displayName)[0] || "؟")}</div>
-          <div>
-            <div class="name">${esc(it.displayName || "—")}</div>
-            <div class="votes">عدد المصوّتين: ${Number(it.count||0)}</div>
-          </div>
-          <div class="num">#${i+1}</div>
-        `;
-        container.appendChild(row);
-      }
-    }
-
-    function renderPosts(items){
-      postsList.innerHTML = "";
-      if (!items.length){
-        postsList.innerHTML = `<div class="hint">لا توجد منشورات بعد.</div>`;
-        return;
-      }
-
-      for (const p of items){
-        const box = document.createElement("div");
-        box.className = "post";
-
-        const typeLabel = p.type === "mcq" ? "اختبار (اختيار من متعدد)" : "منشور";
-        const authorName = p.authorName || "معلم/إدارة";
-
-        let body = "";
-        if (p.type === "mcq"){
-          const opts = (p.mcq?.options || []).map(x => `<li>${esc(x)}</li>`).join("");
-          body = `
-            <div class="postBody">
-              <div style="font-weight:1000">سؤال:</div>
-              <div style="margin-top:6px">${esc(p.mcq?.question || "")}</div>
-              <ul class="bullets">${opts}</ul>
-            </div>
-          `;
-        } else {
-          body = `<div class="postBody">${esc(p.content || "")}</div>`;
-        }
-
-        box.innerHTML = `
-          <div class="postHead">
-            <div class="mini">${p.authorPhoto ? `<img src="${esc(p.authorPhoto)}" alt="">` : (esc(authorName)[0] || "م")}</div>
-            <div style="min-width:0">
-              <p class="postTitle">${esc(p.title || "بدون عنوان")}</p>
-              <div class="postMeta">${esc(typeLabel)} • ${esc(authorName)}</div>
-            </div>
-          </div>
-          ${body}
-        `;
-        postsList.appendChild(box);
-      }
-    }
-
-    async function loadSchool(schoolId){
-      cleanupSchoolListeners();
-      currentSchoolId = schoolId;
-      showSchool();
-
-      // 1) School doc
-      unsubSchool = onSnapshot(doc(db, "schools", schoolId), (snap) => {
-        if (!snap.exists()){
-          crumbSchool.textContent = "مدرسة غير موجودة";
-          schoolName.textContent = "مدرسة غير موجودة";
-          schoolDesc.textContent = "لا يوجد بيانات لهذه المدرسة.";
-          schoolAddr.textContent = "";
-          btnMaps.href = "#/";
-          return;
-        }
-
-        currentSchool = { id: snap.id, ...(snap.data()||{}) };
-
-        const nm = currentSchool.name || "مدرسة";
-        crumbSchool.textContent = nm;
-        document.title = `${nm} — school.sy`;
-
-        // cover
-        if (currentSchool.coverURL){
-          schoolCover.innerHTML = `<img src="${esc(currentSchool.coverURL)}" alt="">`;
-        } else {
-          schoolCover.innerHTML = "";
-        }
-
-        // logo
-        if (currentSchool.logoURL){
-          schoolLogo.innerHTML = `<img src="${esc(currentSchool.logoURL)}" alt="">`;
-        } else {
-          schoolLogo.textContent = (nm[0] || "S");
-        }
-
-        schoolName.textContent = nm;
-        schoolDesc.textContent = currentSchool.description || "صفحة المدرسة: أفضل المعلمين/الطلاب + منشورات + اختبارات.";
-        schoolAddr.textContent = `📍 ${currentSchool.city || "—"} • ${currentSchool.address || ""}`;
-
-        btnMaps.href = (currentSchool.mapsUrl) ? currentSchool.mapsUrl : mapsLink(currentSchool);
-      });
-
-      // 2) Leaderboards doc (per school)
-      unsubBoards = onSnapshot(doc(db, "leaderboards", schoolId), (snap) => {
-        const d = snap.data() || {};
-        renderRank(topTeachers, d.teachersTop || []);
-        renderRank(topStudents, d.studentsTop || []);
-      });
-
-      // 3) Posts (where schoolId)
-      // قد يطلب Firestore Index أول مرة — إذا ظهر خطأ index، سأعطيك خطوة إنشاءه.
-      const qPosts = query(
-        collection(db, "posts"),
-        where("schoolId", "==", schoolId),
-        orderBy("createdAt", "desc"),
-        limit(30)
-      );
-
-      unsubPosts = onSnapshot(qPosts, (snap) => {
-        const arr = [];
-        snap.forEach(d => arr.push({ id: d.id, ...(d.data()||{}) }));
-        renderPosts(arr);
-      }, (err) => {
-        console.error(err);
-        postsList.innerHTML = `<div class="msg err">❌ خطأ في قراءة المنشورات. إذا ظهر خطأ Index أخبرني وسأعطيك الرابط الصحيح لإنشاءه.</div>`;
-      });
-    }
-
-    /* ========= 8) Routing (Hash) ========= */
-    function parseRoute(){
-      const h = (location.hash || "#/").replace(/^#/, "");
-      if (h === "/" || h === "") return { view:"home" };
-
-      const m = h.match(/^\/school\/([^\/]+)$/);
-      if (m){
-        // format: <id>-<slug>
-        const raw = decodeURIComponent(m[1]);
-        const id = raw.split("-")[0]; // نأخذ id قبل أول "-"
-        return { view:"school", schoolId:id };
-      }
-      return { view:"home" };
-    }
-
-    async function route(){
-      const r = parseRoute();
-      if (r.view === "home"){
-        showHome();
-      } else {
-        await loadSchool(r.schoolId);
-      }
-    }
-    window.addEventListener("hashchange", route);
-
-    /* ========= 9) Modal: student/parent request ========= */
-    const modalBackdrop = $("modalBackdrop");
-    const btnCloseModal = $("btnCloseModal");
-    const btnRequestAccount = $("btnRequestAccount");
-    const btnSendRequest = $("btnSendRequest");
-    const reqRole = $("reqRole");
-    const reqName = $("reqName");
-    const reqNote = $("reqNote");
-    const reqMsg = $("reqMsg");
-    const labelName = $("labelName");
-
-    function openModal(){
-      reqMsg.textContent = "";
-      reqMsg.className = "msg";
-      reqRole.value = "student";
-      reqName.value = "";
-      reqNote.value = "";
-      labelName.textContent = "اسم الطالب";
-      modalBackdrop.classList.add("show");
-      modalBackdrop.setAttribute("aria-hidden","false");
-    }
-    function closeModal(){
-      modalBackdrop.classList.remove("show");
-      modalBackdrop.setAttribute("aria-hidden","true");
-    }
-
-    btnRequestAccount.addEventListener("click", () => {
+    $("btnRequestStudentParent").onclick = ()=>{
       if (!currentSchoolId) return;
-      openModal();
-    });
-    btnCloseModal.addEventListener("click", closeModal);
-    modalBackdrop.addEventListener("click", (e) => { if (e.target === modalBackdrop) closeModal(); });
+      $("reqMsg").textContent = "";
+      $("reqMsg").className = "msg small";
+      $("reqRole").value = "student";
+      $("reqName").value = "";
+      $("reqPhone").value = "";
+      $("reqNote").value = "";
+      show(reqModal);
+    };
 
-    reqRole.addEventListener("change", () => {
-      labelName.textContent = (reqRole.value === "parent") ? "أهل الطالب: اسم الطالب" : "اسم الطالب";
-    });
-
-    btnSendRequest.addEventListener("click", async () => {
-      reqMsg.textContent = "";
-      reqMsg.className = "msg";
+    $("btnSendRequest").onclick = async ()=>{
+      $("reqMsg").textContent = "";
+      $("reqMsg").className = "msg small";
 
       if (!currentSchoolId){
-        reqMsg.textContent = "خطأ: لم يتم تحديد المدرسة.";
-        reqMsg.classList.add("err");
+        $("reqMsg").className = "msg small err";
+        $("reqMsg").textContent = "لم يتم اختيار مدرسة.";
         return;
       }
 
-      const role = reqRole.value;
-      const name = (reqName.value || "").trim();
-      const note = (reqNote.value || "").trim();
+      const role = $("reqRole").value;
+      const name = $("reqName").value.trim();
+      const phone = $("reqPhone").value.trim();
+      const note = $("reqNote").value.trim();
 
       if (!name){
-        reqMsg.textContent = "الاسم مطلوب";
-        reqMsg.classList.add("err");
+        $("reqMsg").className = "msg small err";
+        $("reqMsg").textContent = "الاسم مطلوب";
         return;
       }
 
       try{
         await addDoc(collection(db, "account_requests"), {
-          schoolId: currentSchoolId,
-          role: role, // student | parent
+          role,
           displayName: name,
-          note: note,
+          phone: phone || "",
+          note: note || "",
           status: "pending",
+          schoolId: currentSchoolId,
           createdAt: serverTimestamp()
         });
-
-        reqMsg.textContent = "✅ تم إرسال الطلب، سيتم مراجعته من إدارة المدرسة.";
-        reqMsg.classList.add("ok");
-        setTimeout(closeModal, 900);
+        $("reqMsg").className = "msg small ok";
+        $("reqMsg").textContent = "✅ تم إرسال الطلب";
       }catch(e){
-        console.error(e);
-        reqMsg.textContent = "❌ فشل الإرسال (تحقق من Rules).";
-        reqMsg.classList.add("err");
+        $("reqMsg").className = "msg small err";
+        $("reqMsg").textContent = "خطأ: " + (e?.message || e);
       }
+    };
+
+    /* Auth state (optional) */
+    let currentProfile = null;
+    onAuthStateChanged(auth, async (user)=>{
+      $("btnLogout").classList.toggle("hidden", !user);
+      if (!user){
+        currentProfile = null;
+        $("userPill").textContent = "زائر";
+        $("btnLoginOpen").classList.remove("hidden");
+        return;
+      }
+      $("btnLoginOpen").classList.add("hidden");
+      $("userPill").textContent = "مستخدم";
+
+      try{
+        const us = await getDoc(doc(db, "users", user.uid));
+        if (us.exists()){
+          currentProfile = us.data();
+          const role = currentProfile?.role || "user";
+          $("userPill").textContent = role === "student" ? "طالب" : (role === "parent" ? "ولي أمر" : role);
+        }
+      }catch{}
     });
 
-    /* ========= 10) Schools list listener ========= */
-    // نقرأ كل المدارس ثم نفلتر محليًا (بسيط وسريع للمراحل الأولى)
-    // fields المستخدمة: name, city, address, logoURL, coverURL, mapsUrl, votesCount, description
-    const qSchools = query(collection(db, "schools"), orderBy("name"), limit(800));
+    /* Render helpers */
+    function renderTop(container, arr){
+      container.innerHTML = "";
+      const safe = Array.isArray(arr) ? arr : [];
+      for (let i=0;i<3;i++){
+        const it = safe[i] || { displayName:"—", photoURL:"", count:0 };
+        const card = document.createElement("div");
+        card.className = "card rankCard";
+        card.innerHTML = `
+          <div class="badge">#${i+1}</div>
+          <div class="avatar">${it.photoURL ? `<img src="${esc(it.photoURL)}" alt="">` : (esc(it.displayName)[0]||"؟")}</div>
+          <div class="rankMeta">
+            <div class="rankName">${esc(it.displayName)}</div>
+            <div class="rankCount">عدد المصوّتين: ${Number(it.count||0)}</div>
+          </div>
+        `;
+        container.appendChild(card);
+      }
+    }
 
-    onSnapshot(qSchools, (snap) => {
-      const arr = [];
-      snap.forEach(docu => {
-        const d = docu.data() || {};
-        arr.push({
-          id: docu.id,
-          name: d.name || "",
-          city: d.city || "",
-          address: d.address || "",
-          logoURL: d.logoURL || "",
-          coverURL: d.coverURL || "",
-          mapsUrl: d.mapsUrl || "",
-          votesCount: Number(d.votesCount || 0),
-          description: d.description || ""
-        });
+    function renderSchoolsCards(list){
+      const wrap = $("schoolsList");
+      wrap.innerHTML = "";
+      list.forEach((s)=>{
+        const div = document.createElement("div");
+        div.className = "card schoolCard";
+        const letter = (s.name?.trim()?.[0] || "S");
+
+        const mapsUrl = s.mapsUrl
+          ? s.mapsUrl
+          : (s.address
+              ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.address)}`
+              : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((s.name||"")+" "+(s.city||""))}`);
+
+        div.innerHTML = `
+          <div class="row">
+            <div class="avatar">${s.logoURL ? `<img src="${esc(s.logoURL)}" alt="">` : esc(letter)}</div>
+            <div style="min-width:0">
+              <h3 title="${esc(s.name)}">${esc(s.name || "—")}</h3>
+              <div class="small muted">${esc(s.city || "—")} • ${esc(s.address || "—")}</div>
+            </div>
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center">
+            <span class="tag">🗳️ ${Number(s.votesCount||0)} تصويت</span>
+          </div>
+          <div class="actions">
+            <button class="btn primary" data-open="${esc(s.id)}" data-name="${esc(s.name||"")}">فتح صفحة المدرسة</button>
+            <a class="btn" href="${mapsUrl}" target="_blank" rel="noopener">خرائط جوجل</a>
+          </div>
+        `;
+        div.querySelector("[data-open]").onclick = (e)=>{
+          const id = e.currentTarget.getAttribute("data-open");
+          const name = e.currentTarget.getAttribute("data-name");
+          location.hash = `#/school/${id}-${slugify(name)}`;
+        };
+        wrap.appendChild(div);
+      });
+    }
+
+    /* Home: read schools (uses votesCount) */
+    let allSchools = [];
+    let citiesSet = new Set();
+    let schoolsUnsub = null;
+
+    function applyFilters(){
+      const nameQ = $("qName").value.trim().toLowerCase();
+      const cityQ = $("qCity").value;
+
+      const filtered = allSchools.filter(s=>{
+        const okName = !nameQ || (String(s.name||"").toLowerCase().includes(nameQ));
+        const okCity = !cityQ || (String(s.city||"") === cityQ);
+        return okName && okCity;
       });
 
-      allSchools = arr;
-      topSchools = [...allSchools].sort((a,b) => (b.votesCount||0) - (a.votesCount||0));
+      renderSchoolsCards(filtered);
+      $("schoolsHint").textContent = filtered.length ? `عدد المدارس المعروضة: ${filtered.length}` : "لا نتائج. جرّب بحثًا مختلفًا.";
+    }
 
-      renderTop3();
-      fillCities();
-      applyFilters();
-      if (!countLabel.textContent || countLabel.textContent === "تحميل...") countLabel.textContent = `عدد المدارس: ${allSchools.length}`;
-    });
+    $("qName").addEventListener("input", applyFilters);
+    $("qCity").addEventListener("change", applyFilters);
 
-    /* ========= 11) Start ========= */
+    function watchSchools(){
+      if (schoolsUnsub) schoolsUnsub();
+      const q = query(collection(db, "schools"), orderBy("votesCount","desc"), limit(200));
+      schoolsUnsub = onSnapshot(q, (snap)=>{
+        allSchools = [];
+        citiesSet = new Set();
+        snap.forEach(d=>{
+          const x = d.data() || {};
+          allSchools.push({ id:d.id, ...x });
+          if (x.city) citiesSet.add(x.city);
+        });
+
+        const sel = $("qCity");
+        const prev = sel.value;
+        sel.innerHTML = `<option value="">كل المدن</option>` + [...citiesSet].sort().map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join("");
+        if ([...citiesSet].includes(prev)) sel.value = prev;
+
+        const top = allSchools.slice(0,3);
+        const topWrap = $("topSchools");
+        topWrap.innerHTML = "";
+        top.forEach((s, idx)=>{
+          const card = document.createElement("div");
+          card.className = "card rankCard";
+          card.innerHTML = `
+            <div class="badge">#${idx+1}</div>
+            <div class="avatar">${s.logoURL ? `<img src="${esc(s.logoURL)}" alt="">` : esc((s.name||"S")[0])}</div>
+            <div class="rankMeta">
+              <div class="rankName">${esc(s.name || "—")}</div>
+              <div class="rankCount">عدد المصوّتين: ${Number(s.votesCount||0)}</div>
+            </div>
+            <button class="btn primary" style="margin-right:auto" data-open="${esc(s.id)}" data-name="${esc(s.name||"")}">فتح</button>
+          `;
+          card.querySelector("[data-open]").onclick = (e)=>{
+            const id = e.currentTarget.getAttribute("data-open");
+            const name = e.currentTarget.getAttribute("data-name");
+            location.hash = `#/school/${id}-${slugify(name)}`;
+          };
+          topWrap.appendChild(card);
+        });
+        $("topSchoolsHint").textContent = top.length ? "يتم الفرز حسب votesCount." : "أضف مدارس داخل collection: schools لعرضها هنا.";
+
+        applyFilters();
+      }, (err)=>{
+        banner("خطأ في قراءة المدارس من Firestore. تأكد من وجود collection باسم schools وقواعد القراءة.", "err");
+        console.error(err);
+      });
+    }
+
+    /* School page watchers */
+    let schoolUnsub = null;
+    let postsUnsub  = null;
+    let lbUnsub     = null;
+
+    function stopSchoolWatchers(){
+      if (schoolUnsub){ schoolUnsub(); schoolUnsub=null; }
+      if (postsUnsub){ postsUnsub(); postsUnsub=null; }
+      if (lbUnsub){ lbUnsub(); lbUnsub=null; }
+    }
+
+    function setSchoolHeroCover(url){
+      const hero = $("schoolHero");
+      const base = `
+        linear-gradient(90deg, rgba(2,132,199,.86), rgba(37,99,235,.72)),
+      `;
+      const img = url
+        ? `url("${url.replace(/"/g,'')}")`
+        : `url("https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=1400&q=70")`;
+      hero.style.backgroundImage = base + img;
+      hero.style.backgroundSize = "cover";
+      hero.style.backgroundPosition = "center";
+    }
+
+    function openSchool(schoolId){
+      currentSchoolId = schoolId;
+      $("routeHint").textContent = `صفحة المدرسة: ${schoolId}`;
+      showView("school");
+      stopSchoolWatchers();
+
+      // School doc
+      schoolUnsub = onSnapshot(doc(db, "schools", schoolId), (snap)=>{
+        if (!snap.exists()){
+          banner("هذه المدرسة غير موجودة في Firestore.", "err");
+          return;
+        }
+        const s = snap.data() || {};
+        $("schoolTitle").textContent = s.name || "مدرسة";
+        $("schoolSubtitle").textContent = `${s.city || "—"} • ${s.address || "—"}`;
+        $("chipCity").textContent = s.city || "—";
+        $("chipVotes").textContent = `${Number(s.votesCount||0)} تصويت`;
+
+        setSchoolHeroCover(s.coverURL || "");
+
+        const mapsUrl = s.mapsUrl
+          ? s.mapsUrl
+          : (s.address
+              ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.address)}`
+              : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent((s.name||"")+" "+(s.city||""))}`);
+        $("chipMap").style.cursor = "pointer";
+        $("chipMap").onclick = ()=> window.open(mapsUrl, "_blank", "noopener");
+      }, (err)=>{
+        banner("خطأ في قراءة بيانات المدرسة. تحقق من القواعد (allow read).", "err");
+        console.error(err);
+      });
+
+      // Leaderboards doc: leaderboards/{schoolId}
+      lbUnsub = onSnapshot(doc(db, "leaderboards", schoolId), (snap)=>{
+        const data = snap.exists() ? (snap.data()||{}) : {};
+        renderTop($("teachersTop"), data.teachersTop || []);
+        renderTop($("studentsTop"), data.studentsTop || []);
+        $("teachersHint").textContent = snap.exists()
+          ? "يتم عرض teachersTop من leaderboards."
+          : "لم يتم إنشاء leaderboards لهذه المدرسة بعد.";
+        $("studentsHint").textContent = snap.exists()
+          ? "يتم عرض studentsTop من leaderboards."
+          : "لم يتم إنشاء leaderboards لهذه المدرسة بعد.";
+      }, (err)=>{
+        console.error(err);
+        banner("خطأ في قراءة leaderboards. تحقق من القواعد.", "err");
+      });
+
+      // Posts (may need index)
+      const pq = query(
+        collection(db, "posts"),
+        where("schoolId","==",schoolId),
+        orderBy("createdAt","desc"),
+        limit(30)
+      );
+
+      postsUnsub = onSnapshot(pq, (snap)=>{
+        const wrap = $("postsList");
+        wrap.innerHTML = "";
+        snap.forEach((d)=>{
+          const p = d.data() || {};
+          const div = document.createElement("div");
+          div.className = "card post";
+
+          const typeLabel = p.type === "mcq" ? "اختبار (اختيار من متعدد)" : "منشور";
+          let body = "";
+          if (p.type === "mcq"){
+            const opts = (p.mcq?.options || []).map(x=>`<li>${esc(x)}</li>`).join("");
+            body = `
+              <div class="muted small">سؤال:</div>
+              <div style="font-weight:900;margin:6px 0 8px">${esc(p.mcq?.question || "")}</div>
+              <ul class="bullets">${opts}</ul>
+            `;
+          }else{
+            body = `<div style="font-weight:700;line-height:1.8">${esc(p.content || "")}</div>`;
+          }
+
+          div.innerHTML = `
+            <div class="postHeader">
+              <div class="avatar" style="width:42px;height:42px">${p.authorPhoto ? `<img src="${esc(p.authorPhoto)}" alt="">` : (esc(p.authorName)[0]||"م")}</div>
+              <div style="min-width:0">
+                <h3 class="postTitle">${esc(p.title || "بدون عنوان")}</h3>
+                <div class="postType">${typeLabel} • ${esc(p.authorName || "معلم")}</div>
+              </div>
+            </div>
+            <div style="margin-top:10px">${body}</div>
+          `;
+          wrap.appendChild(div);
+        });
+
+        $("postsHint").textContent = snap.size ? `عدد المنشورات المعروضة: ${snap.size}` : "لا توجد منشورات بعد لهذه المدرسة.";
+      }, (err)=>{
+        console.error(err);
+        $("postsHint").innerHTML = `❌ خطأ في قراءة المنشورات. غالبًا تحتاج إنشاء Index للاستعلام.<br>
+        افتح Console وانسخ رابط إنشاء الـ Index من رسالة الخطأ وسأعطيك الإعداد الصحيح.`;
+        banner("خطأ قراءة المنشورات (قد يحتاج Index).", "err");
+      });
+    }
+
+    /* Router */
+    function parseHash(){
+      const h = (location.hash || "#/").replace(/^#/, "");
+      const parts = h.split("/").filter(Boolean);
+      if (!parts.length) return { page:"home" };
+      if (parts[0]==="school" && parts[1]){
+        const decoded = decodeURIComponent(parts[1]);
+        const id = decoded.split("-")[0];
+        return { page:"school", schoolId:id };
+      }
+      return { page:"home" };
+    }
+
+    function route(){
+      const r = parseHash();
+      if (r.page==="school" && r.schoolId){
+        openSchool(r.schoolId);
+      } else {
+        currentSchoolId = null;
+        $("routeHint").textContent = "دليل المدارس + صفحات مدارس تفاعلية";
+        stopSchoolWatchers();
+        showView("home");
+      }
+    }
+
+    window.addEventListener("hashchange", route);
+    $("btnHome").onclick = ()=> location.hash = "#/";
+    $("btnBack").onclick = ()=> location.hash = "#/";
+
+    /* Start */
+    watchSchools();
     route();
   </script>
 </body>
